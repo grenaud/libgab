@@ -13,6 +13,14 @@
 using namespace std;
 
 int main (int argc, char *argv[]) {
+    string testst="   asdsa ad asd\t\n ";
+    cout<<"#"<<testst<<"#"<<endl;
+    trimWhiteSpacesBothEnds(&testst);
+    cout<<"#"<<testst<<"#"<<endl;
+    
+
+
+
     if(0)
 	for(int i=0;i<1000;i++){
 	    cout<<randomBool()<<endl;

@@ -9,7 +9,8 @@
 #include <iostream> 
 #include <map> 
 #include <iomanip>
-
+#include <algorithm> 
+#include <functional> 
 #include <sys/time.h> //for srand
 
 //For directory/file operations
@@ -299,6 +300,31 @@ inline bool randomBool(){
     else
     	return false;
 }
+
+
+
+//! To trim white spaces
+/*!
+ *
+ * Trims white spaces at the beginning and end of a string
+
+  \param str : Address of string to trim
+*/
+static inline void trimWhiteSpacesBothEnds(string * str) { 
+    str->erase(str->begin(), find_if(str->begin(), str->end(), not1(ptr_fun<int, int>(isspace))));
+    str->erase(find_if(str->rbegin(), str->rend(), not1(std::ptr_fun<int, int>(isspace))).base(), str->end());
+
+
+}
+
+
+/* static inline void trimWhiteSpacesBothEnds(string * str) { */
+/*     stringstream trimVar; */
+/*     trimVar << *str; */
+/*     str->clear(); */
+/*     trimVar >> *str;    */
+/* } */
+
 
 
 
