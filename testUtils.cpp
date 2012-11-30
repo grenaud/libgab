@@ -13,6 +13,14 @@
 using namespace std;
 
 int main (int argc, char *argv[]) {
+
+    cout<<reverseComplement("ATCG")<<endl;
+    return 0;
+
+    vector<string> s1=allTokens("1:2:3",':');
+    cout<<"#"<<iteratorToString(s1," - ")<<"#"<<endl;
+    return 0;
+
     string testst="   asdsa ad asd\t\n ";
     cout<<"#"<<testst<<"#"<<endl;
     trimWhiteSpacesBothEnds(&testst);

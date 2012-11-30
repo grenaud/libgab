@@ -12,7 +12,7 @@
 #include <algorithm> 
 #include <functional> 
 #include <sys/time.h> //for srand
-
+#include <iterator>
 //For directory/file operations
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -46,6 +46,53 @@ inline bool isValidDNA(const char c){
 }
 
 
+inline char complement(const char c){
+    if(c ==    'A')
+	return 'T';
+
+    if(c ==    'C')
+	return 'G';
+
+    if(c ==    'G')
+	return 'C';
+
+    if(c ==    'T')
+	return 'A';
+
+
+
+    if(c ==    'a')
+	return 't';
+
+    if(c ==    'c')
+	return 'g';
+
+    if(c ==    'g')
+	return 'c';
+
+    if(c ==    't')
+	return 'a';
+
+
+
+    if(c ==    'N')
+	return 'N';
+
+    cerr<<"Utils.h: complement: Invalid base pair="<<c<<endl;
+    exit(1);
+}
+
+
+
+inline string reverseComplement(const string & inputString){
+    string toReturn="";
+    if(inputString.size() >0 )	
+	for(int i=(inputString.size()-1);i>=0;i--){
+	    toReturn+=complement( inputString[i] );
+	}
+
+    return toReturn;
+}
 
 inline bool starsWith(const string & header,const string & tocheck){
     return (header.substr(0, min(header.length(),tocheck.length()) ) == tocheck);
@@ -57,6 +104,15 @@ inline bool starsWith(const string & header,const string & tocheck){
 inline string boolStringify(const bool b){
     return b ? "true" : "false";
 }
+
+
+inline string booleanAsString(bool toprint){
+    if(toprint)
+	return string("currently turned on/used");
+    else
+	return string("not on/not used");
+}
+
 
 inline bool validOneBP(string & toCheck){
     if(toCheck.length() != 1)
@@ -93,6 +149,7 @@ inline bool validAltBP(const string & toCheck){
 
     return false;
 }
+
 
 
 /* inline string returnFirstToken(string & toparse,string & delim){ */
@@ -144,13 +201,13 @@ inline vector<string> allTokens(const string  & toparse,const char  delim){
 
 inline vector<string> allTokens(const string  & toparse,const string & delim){
     if(delim.size() == 0){
-	cerr<<"Utils.cpp: allTokens: delim must have at least one char"<<endl;
+	cerr<<"Utils.h: allTokens: delim must have at least one char"<<endl;
 	exit(1);
     }
     if(delim.size() == 1)
 	return allTokens(toparse,delim[0]);
 
-    cerr<<"Utils.cpp: allTokens: to implement"<<endl;
+    cerr<<"Utils.h: allTokens: to implement"<<endl;
     exit(1);
 
     /* vector<string> toReturn; */
@@ -281,6 +338,43 @@ inline string vectorToString(const vector<T> toPrint,const string separator=",")
     return toReturn;
 }
 
+template <typename T>
+inline string iteratorToString(const T & toPrint,const char * separator=","){
+    typename T::const_iterator it;
+    stringstream s;
+    if(!toPrint.empty()){
+	typename T::const_iterator itEnd= toPrint.end();
+	--itEnd;
+	for(it=toPrint.begin();it!=itEnd;it++){
+	    s<<*it<<separator;
+	}
+	s<<*itEnd;
+    }else{
+	s<<"";
+    }    
+    return s.str();
+}
+
+
+/* template <typename T> */
+/* inline string iteratorToString(const T & toPrint,const char * separator=","){ */
+/*     stringstream s; */
+/*     ostream_iterator<typename T::value_type> out_it (s,separator); */
+
+/*     if(toPrint.size() > 1){ */
+/* 	copy ( toPrint.begin(), toPrint.end()-1, out_it ); */
+/* 	s<<toPrint.back(); */
+/*     }else{ */
+/* 	if(toPrint.size() == 1){ */
+/* 	    s<<toPrint.back(); */
+/* 	}else{ */
+/* 	    s<<""; */
+/* 	} */
+/*     } */
+/*     return  s.str(); */
+/* } */
+
+
 inline string zeroPad(const int numberToOutput,const int amountOfZeros){
     stringstream s;
     s  << setfill('0') << setw(amountOfZeros) <<numberToOutput;
@@ -301,7 +395,20 @@ inline bool randomBool(){
     	return false;
 }
 
+inline string randomDNASeq(int desiredLength){
+  string toreturn="";
+  if(!srandCalled){
+    timeval time;
+    gettimeofday(&time, NULL);
+    srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+    srandCalled=true;
+  }
 
+  for(int i=0;i<desiredLength;i++){
+    toreturn+= "ACGT"[ rand()%4 ];
+  }
+  return toreturn;
+}
 
 //! To trim white spaces
 /*!
