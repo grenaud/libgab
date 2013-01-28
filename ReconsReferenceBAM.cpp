@@ -8,6 +8,16 @@
 #include "ReconsReferenceBAM.h"
 
 
+int numberOfDeletions(const BamAlignment  * al){
+    int toReturn=0;
+    vector<CigarOp> cigarData=al->CigarData;
+    for(unsigned int i=0;i<cigarData.size();i++){
+	if(cigarData[i].Type == 'D')
+	    toReturn+=cigarData[i].Length;
+	//reconstructedTemp+=string(cigarData[i].Length,cigarData[i].Type);
+    }
+    return toReturn;
+}
 
 //! This function returns a string representation of the reference
 /*!

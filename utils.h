@@ -9,6 +9,7 @@
 #include <iostream> 
 #include <map> 
 #include <iomanip>
+#include <memory>
 #include <algorithm> 
 #include <functional> 
 #include <sys/time.h> //for srand
@@ -29,7 +30,7 @@ inline char upper(const char c){
 }
 
 
-
+//Check if it is either A,C,G,T,N
 inline bool isValidDNA(const char c){
     if(c ==    'A')
 	return true;
@@ -41,9 +42,88 @@ inline bool isValidDNA(const char c){
 	return true;
     if(c ==    'N')
 	return true;
-
     return false;
 }
+
+//Check if it is either A,C,G,T
+inline bool isResolvedDNA(const char c){
+    if(c ==    'A')
+	return true;
+    if(c ==    'C')
+	return true;
+    if(c ==    'G')
+	return true;
+    if(c ==    'T')
+	return true;
+    return false;
+}
+
+//Returns an index for every 2mer of different base A,C,G,T
+inline int dimer2index(const char c1,const char c2){
+
+    if(c1     ==    'A'){
+
+	if(c2 ==    'C')
+	    return 0;
+	if(c2 ==    'G')
+	    return 1;
+	if(c2 ==    'T')
+	    return 2;
+
+	cerr<<"Utils.h:1 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+    if(c1     ==    'C'){
+
+	if(c2 ==    'A')
+	    return 3;
+	if(c2 ==    'G')
+	    return 4;
+	if(c2 ==    'T')
+	    return 5;
+
+	cerr<<"Utils.h:2 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+    if(c1     ==    'G'){
+
+	if(c2 ==    'A')
+	    return 6;
+	if(c2 ==    'C')
+	    return 7;
+	if(c2 ==    'T')
+	    return 8;
+
+	cerr<<"Utils.h:3 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+
+    if(c1     ==    'T'){
+
+	if(c2 ==    'A')
+	    return 9;
+	if(c2 ==    'C')
+	    return 10;
+	if(c2 ==    'G')
+	    return 11;
+
+	cerr<<"Utils.h:4 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+
+    cerr<<"Utils.h:5 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
+    exit(1);
+}
+
+
 
 
 inline char complement(const char c){
@@ -180,6 +260,7 @@ inline bool validAltBP(const string & toCheck){
 /* } */
 
 
+
 inline vector<string> allTokens(const string  & toparse,const char  delim){
     vector<string> toReturn;
     size_t lastfound=-1;
@@ -199,23 +280,23 @@ inline vector<string> allTokens(const string  & toparse,const char  delim){
 
 
 
-inline vector<string> allTokens(const string  & toparse,const string & delim){
-    if(delim.size() == 0){
-	cerr<<"Utils.h: allTokens: delim must have at least one char"<<endl;
-	exit(1);
-    }
-    if(delim.size() == 1)
-	return allTokens(toparse,delim[0]);
+/* inline vector<string> allTokens(const string  & toparse,const string & delim){ */
+/*     if(delim.size() == 0){ */
+/* 	cerr<<"Utils.h: allTokens: delim must have at least one char"<<endl; */
+/* 	exit(1); */
+/*     } */
+/*     /\* if(delim.size() == 1) *\/ */
+/*     /\* 	return allTokens(toparse,delim[0]); *\/ */
 
-    cerr<<"Utils.h: allTokens: to implement"<<endl;
-    exit(1);
+/*     cerr<<"Utils.h: allTokens: to implement"<<endl; */
+/*     exit(1); */
 
-    /* vector<string> toReturn; */
+/*     /\* vector<string> toReturn; *\/ */
 
  
 		
-    /* return toReturn; */
-}
+/*     /\* return toReturn; *\/ */
+/* } */
 
 
 inline bool isInsert(const string & toCheck){
@@ -230,15 +311,16 @@ inline bool isInsert(const string & toCheck){
 
 
 
-inline map<string, string> info2map(const string & info){
-    map<string, string> toReturn;
-    vector<string> fields    =allTokens(info,';');
+inline map<string, string> * info2map(const string & info){
+    //auto_ptr< map<string, string> > toReturn  (new map<string, string>() );
+    map<string, string> * toReturn = new map<string, string>() ;
+    vector<string> fields=allTokens(info,';');
     for(unsigned int i=0;i<fields.size();i++){
 	size_t found = fields[i].find("=");
 	if (found!=string::npos){
-	    toReturn[fields[i].substr(0,found)]=fields[i].substr(found+1);
+	    (*toReturn)[fields[i].substr(0,found)]=fields[i].substr(found+1);
 	}else{
-	    toReturn[fields[i]]="";
+	    (*toReturn)[fields[i]]="";
 	}
     }
     return toReturn;
@@ -419,10 +501,147 @@ inline string randomDNASeq(int desiredLength){
 */
 static inline void trimWhiteSpacesBothEnds(string * str) { 
     str->erase(str->begin(), find_if(str->begin(), str->end(), not1(ptr_fun<int, int>(isspace))));
-    str->erase(find_if(str->rbegin(), str->rend(), not1(std::ptr_fun<int, int>(isspace))).base(), str->end());
+    str->erase(find_if(str->rbegin(), str->rend(), not1(std::ptr_fun<int, int>(isspace))).base(), str->end());// 
 
 
 }
+
+
+//! Returns an integer between 0 and 15  for base {A,C,G,T}x{A,C,G,T}
+/*!
+ * This function returns an integer according to the following table:
+ * 
+ * AA  0 
+ * AC  1
+ * AG  2
+ * AT  3
+ * CA  4
+ * CC  5
+ * CG  6
+ * CT  7
+ * GA  8
+ * GC  9
+ * GG 10
+ * GT 11
+ * TA 12
+ * TC 13
+ * TG 14
+ * TT 15
+*/
+inline int allelePair2Int(char bp1,char bp2){
+
+    if(bp1 == 'A'){
+	if(bp2 == 'A'){
+	    return 0;
+	}
+	if(bp2 == 'C'){
+	    return 1;
+	}
+	if(bp2 == 'G'){
+	    return 2;
+	}
+	if(bp2 == 'T'){
+	    return 3;
+	}
+    }
+
+    if(bp1 == 'C'){
+	if(bp2 == 'C'){
+	    return 5;
+	}
+	if(bp2 == 'T'){
+	    return 7;
+	}
+	if(bp2 == 'A'){
+	    return 4;
+	}
+	if(bp2 == 'G'){
+	    return 6;
+	}
+    }
+
+
+    if(bp1 == 'G'){
+	if(bp2 == 'G'){
+	    return 10;
+	}
+	if(bp2 == 'A'){
+	    return 8;
+	}
+	if(bp2 == 'C'){
+	    return 9;
+	}
+	if(bp2 == 'T'){
+	    return 11;
+	}
+    }
+
+
+    if(bp1 == 'T'){
+	if(bp2 == 'T'){
+	    return 15;
+	}
+	if(bp2 == 'G'){
+	    return 14;
+	}
+	if(bp2 == 'A'){
+	    return 12;
+	}
+	if(bp2 == 'C'){
+	    return 13;
+	}
+    }
+
+
+    cerr<<"Utils.h allelePair2Int invalid 2 bp: "<<bp1<<" and "<<bp2<<endl;
+    exit(1);
+
+}
+
+
+
+inline int isPotentialTransition(char bp1,char bp2){
+
+    if(bp1 == 'A'){
+	if(bp2 == 'G'){
+	    return true;
+	}
+	return false;
+    }
+
+    if(bp1 == 'C'){
+	if(bp2 == 'T'){
+	    return true;
+	}
+	return false;
+    }
+
+
+    if(bp1 == 'G'){
+	if(bp2 == 'A'){
+	    return true;
+	}
+	return false;
+    }
+
+
+    if(bp1 == 'T'){
+	if(bp2 == 'C'){
+	    return true;
+	}
+	return false;
+    }
+
+
+    cerr<<"Utils.h isPotentialTransition invalid 2 bp: "<<bp1<<" and "<<bp2<<endl;
+    exit(1);
+
+}
+
+
+
+
+
 
 
 /* static inline void trimWhiteSpacesBothEnds(string * str) { */
