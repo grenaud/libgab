@@ -347,7 +347,7 @@ T destringify( const string& s ){
     istringstream i(s);
     T x;
     if (!(i >> x)){
-	cerr<<"Utils.cpp: Unable to convert string=\""<<s<<"\""<<endl;
+	cerr<<"Utils.cpp: destringify() Unable to convert string=\""<<s<<"\""<<endl;
 	exit(1);
     }
     return x;

@@ -15,6 +15,7 @@ using namespace std;
 
 int main (int argc, char *argv[]) {
 
+    cout<<destringify<float>("hello")<<endl;
     bool s1=destringify<bool>("0");
     bool s2=destringify<bool>("1");
     cout<<booleanAsString(s1)<<endl;
