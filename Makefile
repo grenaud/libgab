@@ -1,24 +1,19 @@
+BAMTOOLS= /mnt/solexa/bin/bamtools-2.2.2/
+
 CXX      = g++ -g  #-pg
-CXXFLAGS = -Wall -lm -O3   -c
+CXXFLAGS = -Wall -lm -O3 -I${BAMTOOLS}/include/ -c 
 
 
-all: utils.o testUtils ReconsReferenceBAM.o
-
-
-utils.o:	utils.cpp
-	${CXX} ${CXXFLAGS} utils.cpp
-
-
-testUtils.o:	testUtils.cpp
-	${CXX} ${CXXFLAGS} testUtils.cpp
+all: utils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o
 
 
 testUtils:	testUtils.o ${LIBGAB}utils.o  utils.o
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-ReconsReferenceBAM.o: ReconsReferenceBAM.cpp
-	${CXX} ${CXXFLAGS} ReconsReferenceBAM.cpp
+%.o: %.cpp
+	${CXX} ${CXXFLAGS} $^ -o $@
+
 
 clean :
-	rm -f utils.o testUtils.o testUtils ReconsReferenceBAM.o
+	rm -f utils.o testUtils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o
 

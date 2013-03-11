@@ -1,12 +1,15 @@
 #ifndef utils_h
 #define utils_h
 
+#include <cmath> 
+#include <limits> 
 #include <string> 
 #include <vector> 
 #include <stdio.h>
 #include <stdlib.h>
 #include <sstream> 
-#include <iostream> 
+#include <iostream>
+#include <ctime>
 #include <map> 
 #include <iomanip>
 #include <memory>
@@ -56,6 +59,20 @@ inline bool isResolvedDNA(const char c){
     if(c ==    'T')
 	return true;
     return false;
+}
+inline int base2int(const char c){
+    if(c ==    'N')
+	return 0;
+    if(c ==    'A')
+	return 1;
+    if(c ==    'C')
+	return 2;
+    if(c ==    'G')
+	return 3;
+    if(c ==    'T')
+	return 4;
+    cerr<<"utils.h base2int() Invalid base "<<c<<endl;
+    exit(1);
 }
 
 //Returns an index for every 2mer of different base A,C,G,T
@@ -408,7 +425,7 @@ inline bool strBeginsWith (string const &stringToLookIn, string const &prefix){
 }
 
 template <typename T>
-inline string vectorToString(const vector<T> toPrint,const string separator=","){
+inline string vectorToString(const vector<T> & toPrint,const string separator=","){
     if(toPrint.size() == 0){
 	return "";
     }
@@ -471,11 +488,38 @@ inline bool randomBool(){
 	srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
 	srandCalled=true;
     }
+
+
     if(rand() % 2 == 0)
     	return true;
     else
     	return false;
 }
+
+
+inline int callRand(){
+    if(!srandCalled){
+	timeval time;
+	gettimeofday(&time, NULL);
+	srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	srandCalled=true;
+    }
+    return rand();
+}
+
+
+static bool srand48Called=false;
+inline unsigned int randomUint(){
+    if(!srand48Called){
+	timeval time;
+	gettimeofday(&time, NULL);
+	srand48(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	srand48Called=true;
+    }
+    unsigned int toReturn = (unsigned int)(mrand48());
+    return toReturn;
+}
+
 
 inline string randomDNASeq(int desiredLength){
   string toreturn="";
@@ -639,6 +683,26 @@ inline int isPotentialTransition(char bp1,char bp2){
 }
 
 
+inline string getDateString(){
+    time_t t = time(0);   // get time now
+    struct tm * now = localtime( & t );
+    return  
+	""+
+	stringify(now->tm_year + 1900)+"-"+
+	zeroPad(  (now->tm_mon + 1) ,2)+"-"+
+	zeroPad(  (now->tm_mday + 1) ,2);
+
+}
+
+inline string getTimeString(){
+    time_t t = time(0);   // get time now
+    struct tm * now = localtime( & t );
+    return  
+	""+
+	zeroPad(now->tm_hour,2)+":"+
+	zeroPad(now->tm_min ,2)+":"+
+	zeroPad(now->tm_sec ,2);
+}
 
 
 
@@ -653,5 +717,47 @@ inline int isPotentialTransition(char bp1,char bp2){
 
 
 
+inline double correlation(const vector<double>& x, const vector<double>& y){
+    if(x.size() == 0){
+	cerr<<"Utils.h correlation() ERROR: the size of x is zero"<<endl;
+	exit(1);
+
+    }
+
+    if(x.size() != y.size()){
+	cerr<<"Utils.h correlation() ERROR: the size of x is not the same as the size of y"<<endl;
+	exit(1);
+    }
+
+    double n  = double(x.size());
+    double ex(0), ey(0),xt(0), yt(0),sxx(0),syy(0),sxy(0) ;
+
+    for (unsigned int i = 0; i < n; i++) { 
+	ex += x[i];
+	ey += y[i];
+    }
+    /* cout<<n<<endl; */
+    ex = ex/n;
+    ey = ey/n;
+    /* cout<<"ex " <<ex<<endl; */
+    /* cout<<"ey " <<ey<<endl; */
+
+    for (unsigned int i = 0; i < n; i++) { 
+	xt = x[i] - ex;
+	yt = y[i] - ey;
+	/* cout<<"xt "<<xt<<endl; */
+	/* cout<<"yt "<<yt<<endl; */
+
+	sxx += xt * xt;
+	syy += yt * yt;
+	sxy += xt * yt;
+    }
+
+    /* cout<<"1 "<<sxx<<endl; */
+    /* cout<<"2 "<<sxy<<endl; */
+    /* cout<<"3 "<<syy<<endl; */
+
+    return (sxy/(sqrt(sxx*syy)+ numeric_limits< double >::min() ));
+}
 
 #endif

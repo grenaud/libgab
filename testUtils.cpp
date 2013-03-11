@@ -15,6 +15,13 @@ using namespace std;
 
 int main (int argc, char *argv[]) {
 
+    for(int i=0;i<10000;i++)
+	cout<<randomUint()<<endl;
+    return 0;
+    cout<<getDateString()<<endl;
+    cout<<getTimeString()<<endl;
+
+    return 1;
     cout<<destringify<float>("hello")<<endl;
     bool s1=destringify<bool>("0");
     bool s2=destringify<bool>("1");

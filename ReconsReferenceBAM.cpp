@@ -29,7 +29,7 @@ int numberOfDeletions(const BamAlignment  * al){
 */
 string reconstructRef(const BamAlignment  * al){
     //initialize
-    int editDist=-1;
+    // int editDist=-1;
     string mdFieldString="";
     string reconstructed="";
     string reconstructedTemp="";
@@ -41,12 +41,12 @@ string reconstructRef(const BamAlignment  * al){
     }
 
     //get relevant data
-    if(!al->GetTag("NM",editDist)){
-	cerr<<"Cannot get NM tag from "<<al->Name<<endl;
-	exit(1);
-    }
+    // if(!al->GetTag("NM",editDist)){
+    // 	cerr<<"Cannot get NM tag from "<<al->Name<<endl;
+    // 	exit(1);
+    // }
     if(!al->GetTag("MD",mdFieldString)){
-	cerr<<"Cannot get NM tag from "<<al->Name<<endl;
+	cerr<<"ReconsReferenceBAM: Cannot get MD tag from "<<al->Name<<endl;
 	exit(1);
     }
 	
