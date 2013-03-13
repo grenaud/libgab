@@ -1,7 +1,7 @@
 BAMTOOLS= /mnt/solexa/bin/bamtools-2.2.2/
 
-CXX      = g++ -g  #-pg
-CXXFLAGS = -Wall -lm -O3 -I${BAMTOOLS}/include/ -c 
+CXX      = g++ #-g  -pg
+CXXFLAGS = -Wall -lm -O3 -I. -I${BAMTOOLS}/include/ -c 
 
 
 all: utils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o
