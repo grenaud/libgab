@@ -7,36 +7,36 @@
 
 #include "PutProgramInHeader.h"
 
-string returnGitHubVersion(const string  programName,const string  suffixToAdd){
-     //getting github version
-    string directoryProgram;
-    string commandPath=string(programName);
-    unsigned posSlash=commandPath.find_last_of("/");
-    if(posSlash == string::npos){
-	directoryProgram="";
-    }else{
-	directoryProgram=commandPath.substr(0,posSlash);
-    }
-    string gitFileLog=directoryProgram+"/"+suffixToAdd+"/.git/logs/HEAD";
-    string gitVersion="NA";
-    if(isFile(gitFileLog)){
-	ifstream myFile;
-	string line;
-	myFile.open(gitFileLog.c_str(), ios::in);
+// string returnGitHubVersion(const string  programName,const string  suffixToAdd){
+//      //getting github version
+//     string directoryProgram;
+//     string commandPath=string(programName);
+//     unsigned posSlash=commandPath.find_last_of("/");
+//     if(posSlash == string::npos){
+// 	directoryProgram="";
+//     }else{
+// 	directoryProgram=commandPath.substr(0,posSlash);
+//     }
+//     string gitFileLog=directoryProgram+"/"+suffixToAdd+"/.git/logs/HEAD";
+//     string gitVersion="NA";
+//     if(isFile(gitFileLog)){
+// 	ifstream myFile;
+// 	string line;
+// 	myFile.open(gitFileLog.c_str(), ios::in);
 
-	if (myFile.is_open()){
-	    while ( getline (myFile,line)){
-		vector<string> vs=allTokens(line,' ');
-		gitVersion=vs[1];
-	    }
-	    myFile.close();
-	}else{
-	    cerr << "Unable to open github file "<<gitFileLog<<endl;
-	    return "NA";
-	}
-    }
-    return gitVersion;
-}
+// 	if (myFile.is_open()){
+// 	    while ( getline (myFile,line)){
+// 		vector<string> vs=allTokens(line,' ');
+// 		gitVersion=vs[1];
+// 	    }
+// 	    myFile.close();
+// 	}else{
+// 	    cerr << "Unable to open github file "<<gitFileLog<<endl;
+// 	    return "NA";
+// 	}
+//     }
+//     return gitVersion;
+// }
 
 
 

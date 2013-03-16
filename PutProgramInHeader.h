@@ -30,6 +30,6 @@ void putProgramInHeader(SamHeader * header,
 			const string & programCL,
 			const string & programVersion="NA");
 
-string returnGitHubVersion(string programName,string suffixToAdd);
+//string returnGitHubVersion(string programName,string suffixToAdd);
 
 #endif

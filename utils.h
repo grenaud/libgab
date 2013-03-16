@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <sstream> 
 #include <iostream>
+#include <fstream>
 #include <ctime>
 #include <map> 
 #include <iomanip>
@@ -644,7 +645,7 @@ inline int allelePair2Int(char bp1,char bp2){
 
 
 
-inline int isPotentialTransition(char bp1,char bp2){
+inline int isPotentialTransition(const char bp1,const char bp2){
 
     if(bp1 == 'A'){
 	if(bp2 == 'G'){
@@ -758,6 +759,39 @@ inline double correlation(const vector<double>& x, const vector<double>& y){
     /* cout<<"3 "<<syy<<endl; */
 
     return (sxy/(sqrt(sxx*syy)+ numeric_limits< double >::min() ));
+}
+
+
+inline string returnGitHubVersion(const string  programName,const string  suffixToAdd){
+    //getting github version
+    string directoryProgram;
+    string commandPath=string(programName);
+    unsigned posSlash=commandPath.find_last_of("/");
+    if(posSlash == string::npos){
+        directoryProgram="";
+    }else{
+        directoryProgram=commandPath.substr(0,posSlash);
+    }
+    string gitFileLog=directoryProgram+"/"+suffixToAdd+"/.git/logs/HEAD";
+    string gitVersion="NA";
+    if(isFile(gitFileLog)){
+        ifstream myFile;
+        string line;
+        myFile.open(gitFileLog.c_str(), ios::in);
+
+        if (myFile.is_open()){
+            while ( getline (myFile,line)){
+                vector<string> vs=allTokens(line,' ');
+                gitVersion=vs[1];
+            }
+            myFile.close();
+
+        }else{
+            cerr << "Unable to open github file "<<gitFileLog<<endl;
+            return "NA";
+        }
+    }
+    return gitVersion;
 }
 
 #endif
