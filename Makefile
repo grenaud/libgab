@@ -13,6 +13,7 @@ gzstream/libgzstream.a:
 testUtils:	testUtils.o  utils.o
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
+
 %.o: %.cpp
 	${CXX} ${CXXFLAGS} $^ -o $@
 
