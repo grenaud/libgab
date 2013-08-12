@@ -10,7 +10,7 @@ all: utils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o gzstream/gzstre
 gzstream/libgzstream.a:
 	make -C gzstream/
 
-testUtils:	testUtils.o ${LIBGAB}utils.o  utils.o
+testUtils:	testUtils.o  utils.o
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 %.o: %.cpp
