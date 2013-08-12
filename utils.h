@@ -144,6 +144,84 @@ inline int dimer2index(const char c1,const char c2){
 
 
 
+//Returns an index for every 2mer of different
+inline int twoBases2index(const char c1,const char c2){
+
+    if(c1     ==    'A'){
+
+	if(c2 ==    'A')
+	    return 0;
+	if(c2 ==    'C')
+	    return 1;
+	if(c2 ==    'G')
+	    return 2;
+	if(c2 ==    'T')
+	    return 3;
+
+	cerr<<"Utils.h:1 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+    if(c1     ==    'C'){
+
+
+	if(c2 ==    'A')
+	    return 4;
+	if(c2 ==    'C')
+	    return 5;
+	if(c2 ==    'G')
+	    return 6;
+	if(c2 ==    'T')
+	    return 7;
+
+	cerr<<"Utils.h:2 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+    if(c1     ==    'G'){
+
+	if(c2 ==    'A')
+	    return 8;
+	if(c2 ==    'C')
+	    return 9;
+	if(c2 ==    'G')
+	    return 10;
+	if(c2 ==    'T')
+	    return 11;
+
+
+	cerr<<"Utils.h:3 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+
+    if(c1     ==    'T'){
+
+	if(c2 ==    'A')
+	    return 12;
+	if(c2 ==    'C')
+	    return 13;
+	if(c2 ==    'G')
+	    return 14;
+	if(c2 ==    'T')
+	    return 15;
+
+	cerr<<"Utils.h:4 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+
+    cerr<<"Utils.h:5 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
+    exit(1);
+}
+
+
+
+
 inline char complement(const char c){
     if(c ==    'A')
 	return 'T';
@@ -437,6 +515,7 @@ inline string vectorToString(const vector<T> & toPrint,const string separator=",
     toReturn+=(stringify(toPrint[ toPrint.size() -1 ]));
     return toReturn;
 }
+
 
 template <typename T>
 inline string iteratorToString(const T & toPrint,const char * separator=","){
@@ -793,5 +872,47 @@ inline string returnGitHubVersion(const string  programName,const string  suffix
     }
     return gitVersion;
 }
+
+
+template <typename T>
+inline vector<T>  vectorDist(const vector<T> & toEvaluate){
+    vector<T> toReturn;
+    T m2;
+    T m1;
+    T m;
+    if(toEvaluate.size() <=1){
+	return toReturn;
+    }
+    //have at least 2
+    m2=toEvaluate[0];
+    m1=toEvaluate[1];
+    if(m2>m1){
+	cerr<<"utils.h vectorDist() vector is unsorted"<<endl;
+	exit(1);
+    }
+    toReturn.push_back( (m1-m2)  );
+         
+    for(unsigned int i=2;i<toEvaluate.size();i++){
+	m=toEvaluate[i];
+	if(m1>m){
+	    cerr<<"utils.h vectorDist() vector is unsorted"<<endl;
+	    exit(1);
+	}
+
+	if( (m1-m2) < (m-m1) ){ //if m1 
+	    toReturn.push_back( (m1-m2)  );
+	}else{
+	    toReturn.push_back( (m-m1)  );
+	}
+	
+	m2=m1;
+	m1=m;
+    }
+
+    toReturn.push_back( (m1-m2)  );    
+
+    return toReturn;
+}
+
 
 #endif

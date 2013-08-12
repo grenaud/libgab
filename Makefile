@@ -1,11 +1,14 @@
-BAMTOOLS= /mnt/solexa/bin/bamtools-2.2.2/
+BAMTOOLS= $(realpath ../bamtools/)
 
 CXX      = g++ #-g  -pg
-CXXFLAGS = -Wall -lm -O3 -I. -I${BAMTOOLS}/include/ -c 
+CXXFLAGS = -Wall -lm -O3 -I. -Igzstream/ -I${BAMTOOLS}/include/ -c 
 
 
-all: utils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o
+all: utils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o gzstream/gzstream.o FastQObj.o
 
+
+gzstream/libgzstream.a:
+	make -C gzstream/
 
 testUtils:	testUtils.o ${LIBGAB}utils.o  utils.o
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
@@ -16,4 +19,4 @@ testUtils:	testUtils.o ${LIBGAB}utils.o  utils.o
 
 clean :
 	rm -f utils.o testUtils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o
-
+	make -C gzstream/ clean

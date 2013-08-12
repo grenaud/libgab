@@ -14,7 +14,11 @@
 using namespace std;
 
 int main (int argc, char *argv[]) {
-
+    static const int arr[] = {1,4,10,16,20,22,100};
+    vector<int> testVector (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+    vector<int> returnVEC=vectorDist(testVector);
+    cout<<vectorToString(returnVEC)<<endl;
+    return 0;
     for(int i=0;i<10000;i++)
 	cout<<randomUint()<<endl;
     return 0;
