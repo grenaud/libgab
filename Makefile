@@ -4,7 +4,7 @@ CXX      = g++ #-g  -pg
 CXXFLAGS = -Wall -lm -O3 -I. -Igzstream/ -I${BAMTOOLS}/include/ -c 
 
 
-all: utils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o gzstream/gzstream.o FastQObj.o
+all: utils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o gzstream/gzstream.o FastQObj.o FastQParser.o
 
 
 gzstream/libgzstream.a:
