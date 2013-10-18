@@ -915,4 +915,11 @@ inline vector<T>  vectorDist(const vector<T> & toEvaluate){
 }
 
 
+string getCWD(char *arg){
+    string tm=string(arg);
+    vector<string> token=allTokens(tm,'/');
+    token.pop_back();
+    return vectorToString(token,"/")+"/";
+}
+
 #endif
