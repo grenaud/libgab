@@ -1,6 +1,9 @@
 #ifndef utils_h
 #define utils_h
 
+
+#include <stdint.h>
+#include <bitset>
 #include <cmath> 
 #include <limits> 
 #include <string> 
@@ -450,6 +453,14 @@ T destringify( const string& s ){
 } 
 	
 
+template <typename T>
+string var2binary(const T i){
+    stringstream s;
+    std::bitset<8*sizeof(i)> x(i);
+    s << x;
+    return s.str();
+}
+	
 
 inline bool isDirectory(const string & dir){
     struct stat st;
@@ -915,11 +926,50 @@ inline vector<T>  vectorDist(const vector<T> & toEvaluate){
 }
 
 
-string getCWD(char *arg){
+inline string getCWD(char *arg){
     string tm=string(arg);
-    vector<string> token=allTokens(tm,'/');
+    char actualpath [PATH_MAX+1];
+    realpath(arg, actualpath);
+    
+    /* cerr<<"actualpath "<<actualpath<<endl; */
+    /* exit(1); */
+    vector<string> token=allTokens( string(actualpath),'/');
     token.pop_back();
-    return vectorToString(token,"/")+"/";
+
+    if(strEndsWith(vectorToString(token,"/"),"/")){
+	return vectorToString(token,"/");
+    }else{
+	return vectorToString(token,"/")+"/";
+    }
+}
+
+inline pair<double,double> computeMeanSTDDEV(vector<double> & v){
+    double sum = 0.0;
+    for(unsigned int i=0;i<v.size();i++)
+	sum += v[i];
+
+    double m =  sum / double(v.size());
+
+    double accum = 0.0;
+
+    for(unsigned int i=0;i<v.size();i++)
+	accum += ( (v[i] - m) * (v[i] - m) );
+
+
+    double stdev = sqrt( accum / double(v.size()-1) );
+    return make_pair(m,stdev);
+}
+
+
+
+//to convert a DNA string (A,C,G,T) of less than 32 characters to an unsigned 64 bits integer
+inline uint64_t seq2uint64(string & s){
+    uint64_t toreturn = 0;
+    for(unsigned int i=0;i<s.size();i++){
+	toreturn =	toreturn<<2 |( (s[i] == 'A')?0:((s[i] == 'C')?1:((s[i] == 'G')?2:3 ) ));
+    }
+
+    return toreturn;
 }
 
 #endif

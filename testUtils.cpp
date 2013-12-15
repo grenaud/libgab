@@ -14,6 +14,11 @@
 using namespace std;
 
 int main (int argc, char *argv[]) {
+
+    string testdna = "TAT";
+    cout<<seq2uint64(testdna)<<endl;
+    return 0;
+
     static const int arr[] = {1,4,10,16,20,22,100};
     vector<int> testVector (arr, arr + sizeof(arr) / sizeof(arr[0]) );
     vector<int> returnVEC=vectorDist(testVector);
