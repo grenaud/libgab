@@ -972,4 +972,27 @@ inline uint64_t seq2uint64(string & s){
     return toreturn;
 }
 
+/* template <typename T> */
+/* template <typename T2> */
+template<class T, class T2>
+inline vector<T>  allKeysMap(map<T,T2> & m){
+    vector<T> v;
+    for(typename map<T,T2>::iterator it = m.begin(); 
+	it != m.end(); ++it) {
+	v.push_back(it->first);
+    }
+    return v;
+}
+
+inline int hammingDistance(string & s1,string & s2){
+    if(s1.size() != s2.size()){ 	cerr<<"ERROR: the hammingDistance() function cannot be called for strings of different lengths"<<endl; 	exit(1);     }
+    int substitutions=0;
+    for(unsigned int i=0;i<s1.size();i++){    
+	if(s1[i] != s2[i])
+	    substitutions++;
+    }
+    return substitutions;
+}
+
+
 #endif
