@@ -994,5 +994,31 @@ inline int hammingDistance(string & s1,string & s2){
     return substitutions;
 }
 
+inline vector<string> splitWS(string const & tosplit) { 
+    istringstream tempIS(tosplit);
+    vector<string> toReturn;
+
+    copy(istream_iterator<string>(tempIS), 
+	 istream_iterator<string>(),
+         back_inserter(toReturn));
+ 
+   return toReturn;
+}
+
+
+
+inline bool isStringNatNumber(string const & totest) { 
+
+    for(unsigned int i=0;i<totest.size();i++){
+	if(!isdigit(totest[i]))
+	    return false;
+    }
+ 
+   return true;
+}
+
+
 
 #endif
+
+

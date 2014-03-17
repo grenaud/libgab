@@ -22,5 +22,5 @@ testUtils:	testUtils.o  utils.o
 
 
 clean :
-	rm -f utils.o testUtils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o
+	rm -f testUtils *.o 
 	make -C gzstream/ clean

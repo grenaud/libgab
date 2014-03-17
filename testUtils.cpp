@@ -15,6 +15,16 @@ using namespace std;
 
 int main (int argc, char *argv[]) {
 
+    string n1="hello";
+    string n2="1239";
+    cout<<isStringNatNumber(n1)<<endl;
+    cout<<isStringNatNumber(n2)<<endl;
+
+    string toSplit= "f1\tf2   f3  f4\tf5";
+    vector<string> returnVEC2 = splitWS(toSplit);  
+    cout<<vectorToString(returnVEC2)<<endl;
+
+    return 0;
     string testdna = "TAT";
     cout<<seq2uint64(testdna)<<endl;
     return 0;
