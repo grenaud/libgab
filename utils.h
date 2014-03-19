@@ -929,10 +929,12 @@ inline vector<T>  vectorDist(const vector<T> & toEvaluate){
 inline string getCWD(char *arg){
     string tm=string(arg);
     char actualpath [PATH_MAX+1];
-    realpath(arg, actualpath);
+    char * returnRealpath = realpath(arg, actualpath);
     
-    /* cerr<<"actualpath "<<actualpath<<endl; */
-    /* exit(1); */
+    if(returnRealpath == NULL){
+	cerr<<"utils.h getCWD failed on  "<<*arg<<endl;
+	exit(1);
+    }
     vector<string> token=allTokens( string(actualpath),'/');
     token.pop_back();
 
