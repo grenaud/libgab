@@ -433,6 +433,14 @@ inline unsigned int string2uint(const string & s){
 }
 
 
+template <typename T>
+string thousandSeparator(const T i){
+    stringstream s;
+    s.imbue(std::locale("en_US.UTF-8"));
+    s << i;
+    return s.str();
+}
+
 
 template <typename T>
 string stringify(const T i){
@@ -515,6 +523,19 @@ inline bool strBeginsWith (string const &stringToLookIn, string const &prefix){
 }
 
 template <typename T>
+inline string arrayToString(const T toPrint[] ,const int size,const string separator=","){
+    if(size == 0){
+    	return "";
+    }
+    string toReturn="";
+    for(int i=0;i<(size-1);i++){
+    	toReturn+=(stringify(toPrint[i])+separator);
+    }
+    toReturn+=(stringify(toPrint[ size -1 ]));
+    return toReturn;
+}
+
+template <typename T>
 inline string vectorToString(const vector<T> & toPrint,const string separator=","){
     if(toPrint.size() == 0){
 	return "";
@@ -588,6 +609,36 @@ inline bool randomBool(){
 }
 
 
+//returns an int betwen minV and maxV inclusive
+inline int randomInt(int minV,int maxV){
+    if(!srandCalled){
+	timeval time;
+	gettimeofday(&time, NULL);
+	srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	srandCalled=true;
+    }
+    
+    if(maxV-1<minV){
+	cerr<<"Utils.h randomInt cannot generate an int between "<<minV<<" and "<<maxV<<endl;
+	exit(1);
+    }
+
+    int temp  = rand() % (maxV-minV+1);
+    return temp + minV;
+}
+
+inline double randomProb(){ //returns between 0 and 1
+    if(!srandCalled){
+	timeval time;
+	gettimeofday(&time, NULL);
+	srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	srandCalled=true;
+    }
+
+
+    return double(rand())/double(RAND_MAX);
+}
+
 inline int callRand(){
     if(!srandCalled){
 	timeval time;
@@ -611,6 +662,19 @@ inline unsigned int randomUint(){
     return toReturn;
 }
 
+
+inline char randomBPExcept(const char c){
+    if(c ==    'A')
+	return "CGT"[ rand()%3 ];
+    if(c ==    'C')
+	return "AGT"[ rand()%3 ];
+    if(c ==    'G')
+	return "ACT"[ rand()%3 ];
+    if(c ==    'T')
+	return "ACG"[ rand()%3 ];
+
+    return "ACGT"[ rand()%4 ];
+}
 
 inline string randomDNASeq(int desiredLength){
   string toreturn="";
@@ -963,6 +1027,18 @@ inline pair<double,double> computeMeanSTDDEV(vector<double> & v){
 }
 
 
+inline unsigned int nChoosek( unsigned int n, unsigned int k ){
+    if (k > n) return 0;
+    if (k * 2 > n) k = n-k;
+    if (k == 0) return 1;
+    
+    unsigned int result = n;
+    for(unsigned int i = 2; i <= k; ++i ) {
+	result *= (n-i+1);
+	result /= i;
+    }
+    return result;
+}
 
 //to convert a DNA string (A,C,G,T) of less than 32 characters to an unsigned 64 bits integer
 inline uint64_t seq2uint64(string & s){

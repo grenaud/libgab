@@ -15,6 +15,17 @@ using namespace std;
 
 int main (int argc, char *argv[]) {
 
+    
+    int data[] = { 5, 7, 8, 9, 1, 2 };
+    cout<<arrayToString(data,6,"-")<<endl;
+    return 0;
+
+     while(true)
+	 cout<<randomInt(10,12)<<endl;
+    // cout<<thousandSeparator(933421)<<endl;
+    
+    return 0;
+
     string n1="hello";
     string n2="1239";
     cout<<isStringNatNumber(n1)<<endl;
