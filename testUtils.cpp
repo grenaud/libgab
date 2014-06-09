@@ -15,6 +15,22 @@ using namespace std;
 
 int main (int argc, char *argv[]) {
 
+    cout<<isDos("/tmp/dos.fa.gz")<<endl;
+    cout<<isDos("/tmp/mac.fa.gz")<<endl;
+    cout<<isDos("/tmp/mac2.fa.gz")<<endl;
+    cout<<isDos("/tmp/unix.fa.gz")<<endl;
+    cout<<endl;
+    cout<<isDos("/tmp/dos.fa")<<endl;
+    cout<<isDos("/tmp/mac.fa")<<endl;
+    cout<<isDos("/tmp/mac2.fa")<<endl;
+    cout<<isDos("/tmp/unix.fa")<<endl;
+    cout<<endl;
+    cout<<isMac("/tmp/dos.fa")<<endl;
+    cout<<isMac("/tmp/mac.fa")<<endl;
+    cout<<isMac("/tmp/mac2.fa")<<endl;
+    cout<<isMac("/tmp/unix.fa")<<endl;
+
+    return 0;
     
     int data[] = { 5, 7, 8, 9, 1, 2 };
     cout<<arrayToString(data,6,"-")<<endl;

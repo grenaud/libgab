@@ -26,6 +26,7 @@
 #include <sys/stat.h>
 #include <unistd.h> 
 #include <dirent.h>
+#include <gzstream.h>
 
 
 using namespace std;
@@ -76,6 +77,19 @@ inline int base2int(const char c){
     if(c ==    'T')
 	return 4;
     cerr<<"utils.h base2int() Invalid base "<<c<<endl;
+    exit(1);
+}
+
+inline int baseResolved2int(const char c){
+    if(c == 'A')
+	return 0;
+    if(c == 'C')
+	return 1;
+    if(c == 'G')
+	return 2;
+    if(c == 'T')
+	return 3;
+    cerr<<"utils.h baseResolved2int() Invalid base "<<c<<endl;
     exit(1);
 }
 
@@ -1096,6 +1110,89 @@ inline bool isStringNatNumber(string const & totest) {
 }
 
 
+inline bool isDos(string const & filetotest) { 
+    igzstream myfiled (filetotest.c_str(),ios::in|ios::binary);
+
+    if (!myfiled.good()){
+	cerr << "Cannot open file  "<<filetotest<<""<<endl;
+	exit(1);
+    }
+
+    unsigned int maxData=10000;
+    unsigned int dataSoFar=0 ;
+
+    char toread;
+    char toread2=0;
+
+    while(myfiled.read(&toread, sizeof (char))){
+	//cout<<toread<<"\t"<<int(toread)<<endl;
+	if(int(toread) ==  10 ){
+	    if(int(toread2) == 13){
+		return true;
+	    }else{
+		return false;
+	    }
+	}
+	toread2 = toread;
+
+	if( dataSoFar > maxData)
+	    break;
+    }
+    myfiled.close();
+
+    
+    
+    
+    return false;
+}
+
+
+inline bool isMac(string const & filetotest) { 
+    igzstream myfiled (filetotest.c_str(),ios::in|ios::binary);
+
+    if (!myfiled.good()){
+	cerr << "Cannot open file  "<<filetotest<<""<<endl;
+	exit(1);
+    }
+	
+    unsigned int maxData=10000;
+    unsigned int dataSoFar=0 ;
+
+    char toread;
+    char toread2=0;
+
+    while(myfiled.read(&toread, sizeof (char))){
+	//cout<<toread<<"\t"<<int(toread)<<endl;
+	if(int(toread2) == 13){ 
+	    if(int(toread) !=  10 ){ 
+		return true; 
+	    }else{
+		return false;
+	    }
+	}
+
+	toread2 = toread;
+
+	if( dataSoFar > maxData)
+	    break;
+    }
+    myfiled.close();
+
+    
+    if(int(toread2) == 13)
+	return true;
+    else   
+	return false;
+}
+
+
+// Returns log10( pow(10,x)+pow(10,y) ), but does so without causing
+// overflow or loss of precision.
+inline double oplus( double x, double y ){
+    return x > y 
+        ? x + log1p( pow( 10, y-x ) ) / log(10)
+        : y + log1p( pow( 10, x-y ) ) / log(10) ;
+}
 
 #endif
 
