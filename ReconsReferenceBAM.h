@@ -87,6 +87,8 @@ inline vector<mdField> mdString2Vector(const string & mdFieldToParse){
 }
 
 string reconstructRef(const BamAlignment  * al);
+pair< string, vector<int> > reconstructRefWithPos(const BamAlignment  * al);
+
 int numberOfDeletions(const BamAlignment  * al);
 
 #endif
