@@ -86,10 +86,13 @@ string reconstructRef(const BamAlignment  * al){
 		    positionsOnControl.push_back(initialPositionControl++);
 		}
 
+
 		//skipping all the positions with deletions on the read
-		while(parsedMD[mdVectorIndex].bp == '^'){ 
-		    initialPositionControl+=parsedMD[mdVectorIndex].offset;
-		    mdVectorIndex++;
+		if(mdVectorIndex<int(parsedMD.size())){ //still have mismatches
+		    while(parsedMD[mdVectorIndex].bp == '^'){ 
+			initialPositionControl+=parsedMD[mdVectorIndex].offset;
+			mdVectorIndex++;
+		    }
 		}
 		    
 	    }else{
@@ -190,9 +193,13 @@ pair< string, vector<int> >  reconstructRefWithPos(const BamAlignment  * al){
 		}
 
 		//skipping all the positions with deletions on the read
-		while(parsedMD[mdVectorIndex].bp == '^'){ 
-		    initialPositionControl+=parsedMD[mdVectorIndex].offset;
-		    mdVectorIndex++;
+		if(mdVectorIndex<int(parsedMD.size())){ //still have mismatches
+
+		    while(parsedMD[mdVectorIndex].bp == '^'){ 
+			initialPositionControl+=parsedMD[mdVectorIndex].offset;
+			mdVectorIndex++;
+		    }
+
 		}
 		    
 	    }else{
