@@ -17,6 +17,9 @@ gzstream/gzstream.o:
 testUtils:	testUtils.o  utils.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
+testRecons.o:	testRecons.cpp
+	${CXX} ${CXXFLAGS} $1.cpp
+
 testRecons:	testRecons.o  utils.o ${BAMTOOLS}/lib/libbamtools.a  ReconsReferenceBAM.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
