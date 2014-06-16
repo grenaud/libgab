@@ -89,7 +89,8 @@ string reconstructRef(const BamAlignment  * al){
 
 		//skipping all the positions with deletions on the read
 		if(mdVectorIndex<int(parsedMD.size())){ //still have mismatches
-		    while(parsedMD[mdVectorIndex].bp == '^'){ 
+		    while( (mdVectorIndex<int(parsedMD.size())) &&
+			   parsedMD[mdVectorIndex].bp == '^'){ 
 			initialPositionControl+=parsedMD[mdVectorIndex].offset;
 			mdVectorIndex++;
 		    }
