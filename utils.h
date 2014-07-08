@@ -475,6 +475,48 @@ T destringify( const string& s ){
 } 
 	
 
+
+
+inline bool isInt( const string& s ){
+    istringstream i(s);
+    int    x;
+    double y;
+
+    if( !(i >> x) ){
+	return false;
+    }
+    
+    //check if double
+    if( i >> y ){
+	if(x!=int(y))
+	    return false;	
+    }
+
+    return true;
+} 
+
+inline bool isPositiveInt( const string& s ){
+    istringstream i(s);
+    int    x;
+    double y;
+
+    if( !(i >> x) ){
+	return false;
+    }
+    
+    //check if double
+    if( i >> y ){
+	if(x!=int(y))
+	    return false;	
+    }
+
+    if(x<0)
+	return false;
+
+    return true;
+} 
+	
+
 template <typename T>
 string var2binary(const T i){
     stringstream s;

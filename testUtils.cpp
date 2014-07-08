@@ -14,7 +14,15 @@
 using namespace std;
 
 int main (int argc, char *argv[]) {
-
+    cout<<isInt("1")<<endl;
+    cout<<isInt("-1")<<endl;
+    cout<<isInt("123.3")<<endl;
+    cout<<isInt("boo")<<endl;
+    cout<<isPositiveInt("1")<<endl;
+    cout<<isPositiveInt("-1")<<endl;
+    cout<<isPositiveInt("123.3")<<endl;
+    cout<<isPositiveInt("boo")<<endl;
+    return 0;
     cout<<isDos("/tmp/dos.fa.gz")<<endl;
     cout<<isDos("/tmp/mac.fa.gz")<<endl;
     cout<<isDos("/tmp/mac2.fa.gz")<<endl;
