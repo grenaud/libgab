@@ -14,6 +14,24 @@
 using namespace std;
 
 int main (int argc, char *argv[]) {
+    int data2[] = { 5, 7, 8, 9, 1, 2 };
+    cout<<firstAndSecondHighestArray(data2,6).first<<"\t"<<firstAndSecondHighestArray(data2,6).second<<endl;
+
+    std::vector<int> myvector (10);   // 10 zero-initialized ints
+    srand(939);
+    // assign some values:
+    for (unsigned i=0; i<myvector.size(); i++){
+	myvector.at(i)=int(rand()*100);
+	cout<<myvector.at(i)<<endl;
+    }
+    cout<<firstAndSecondHighestVector(myvector).first<<"\t"<<firstAndSecondHighestVector(myvector).second<<endl;
+    return 0;
+
+    cout<<editDistTwoStrings("TEST","TEST")<<endl;    
+    cout<<editDistTwoStrings("TEST","TAST")<<endl;    
+    cout<<editDistTwoStrings("TEST","FAST")<<endl;    
+
+    return 0;
     cout<<isInt("1")<<endl;
     cout<<isInt("-1")<<endl;
     cout<<isInt("123.3")<<endl;

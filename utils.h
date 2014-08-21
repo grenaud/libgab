@@ -565,6 +565,23 @@ inline vector<string>  getdir (const string & dir){
 }
 
 
+inline int editDistTwoStrings (string const & str1, string const & str2){
+    if (str1.length() != str2.length()){
+	cerr <<"editDistTwoStrings(): Cannot count edit distance for two sequences that have different lengths"<<endl;
+	exit(1);   	
+    }
+
+    int editDist=0;
+
+    for(unsigned int i=0;i<str1.length();i++){
+	if ( str1[i] != str2[i] ){
+	    editDist++;
+	}
+    }
+    
+    return editDist;
+}
+
 inline bool strEndsWith (string const &stringToLookIn, string const &suffix){
     if (stringToLookIn.length() >= suffix.length()) 
         return (stringToLookIn.compare (stringToLookIn.length() - suffix.length(), suffix.length(), suffix) == 0 );
@@ -1234,6 +1251,62 @@ inline double oplus( double x, double y ){
     return x > y 
         ? x + log1p( pow( 10, y-x ) ) / log(10)
         : y + log1p( pow( 10, x-y ) ) / log(10) ;
+}
+
+
+template <typename T>
+inline pair<T,T> firstAndSecondHighestVector(const vector<T> & toSearch){
+    if(toSearch.size() < 2 ){
+	cerr<<"Cannot call firstAndSecondVector() on an array of length "<<toSearch.size()<<endl;
+	exit(1);
+    }
+
+    T fstmax  = toSearch[0];
+    T sncmax  = toSearch[1];
+    
+    for(unsigned int i=2;i<toSearch.size();i++){
+	if(toSearch[i] > fstmax ){
+	    sncmax = fstmax;
+	    fstmax = toSearch[i];	    
+	}else{
+	    if(toSearch[i] >  sncmax ){
+		sncmax = toSearch[i];
+	    }
+	}
+    }
+
+    pair<T,T> toreturn;
+    toreturn.first  = fstmax;
+    toreturn.second = sncmax;
+    return toreturn;
+}
+
+
+template <typename T>
+inline pair<T,T> firstAndSecondHighestArray(const T toSearch[] ,const int size){
+    if(size < 2 ){
+	cerr<<"Cannot call firstAndSecondArray() on an array of length "<<size<<endl;
+	exit(1);
+    }
+
+    T fstmax  = toSearch[0];
+    T sncmax  = toSearch[1];
+    
+    for(int i=2;i<size;i++){
+	if(toSearch[i] > fstmax ){
+	    sncmax = fstmax;
+	    fstmax = toSearch[i];	    
+	}else{
+	    if(toSearch[i] >  sncmax ){
+		sncmax = toSearch[i];
+	    }
+	}
+    }
+
+    pair<T,T> toreturn;
+    toreturn.first  = fstmax;
+    toreturn.second = sncmax;
+    return toreturn;
 }
 
 #endif
