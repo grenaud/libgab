@@ -14,8 +14,8 @@
 using namespace std;
 
 int main (int argc, char *argv[]) {
-    int data2[] = { 5, 7, 8, 9, 1, 2 };
-    cout<<firstAndSecondHighestArray(data2,6).first<<"\t"<<firstAndSecondHighestArray(data2,6).second<<endl;
+    double  data2[] = { -1747.38   ,     -393.709    ,    -463.553  ,      -742.378 };
+    cout<<firstAndSecondHighestArray(data2,4).first<<"\t"<<firstAndSecondHighestArray(data2,4).second<<endl;
 
     std::vector<int> myvector (10);   // 10 zero-initialized ints
     srand(939);

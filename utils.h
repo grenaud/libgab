@@ -1261,8 +1261,16 @@ inline pair<T,T> firstAndSecondHighestVector(const vector<T> & toSearch){
 	exit(1);
     }
 
-    T fstmax  = toSearch[0];
-    T sncmax  = toSearch[1];
+    T fstmax;
+    T sncmax;
+
+    if(toSearch[0] > toSearch[1]){
+	fstmax  = toSearch[0];
+	sncmax  = toSearch[1];
+    }else{
+	fstmax  = toSearch[1];
+	sncmax  = toSearch[0];
+    }
     
     for(unsigned int i=2;i<toSearch.size();i++){
 	if(toSearch[i] > fstmax ){
@@ -1289,9 +1297,18 @@ inline pair<T,T> firstAndSecondHighestArray(const T toSearch[] ,const int size){
 	exit(1);
     }
 
-    T fstmax  = toSearch[0];
-    T sncmax  = toSearch[1];
+
     
+    T fstmax;
+    T sncmax;
+    if(toSearch[0] > toSearch[1]){
+	fstmax  = toSearch[0];
+	sncmax  = toSearch[1];
+    }else{
+	fstmax  = toSearch[1];
+	sncmax  = toSearch[0];
+    }
+
     for(int i=2;i<size;i++){
 	if(toSearch[i] > fstmax ){
 	    sncmax = fstmax;
