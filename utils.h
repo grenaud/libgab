@@ -691,7 +691,8 @@ inline int randomInt(int minV,int maxV){
 	srandCalled=true;
     }
     
-    if(maxV-1<minV){
+    
+    if( (maxV) < (minV) ){
 	cerr<<"Utils.h randomInt cannot generate an int between "<<minV<<" and "<<maxV<<endl;
 	exit(1);
     }
