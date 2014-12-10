@@ -40,54 +40,95 @@ inline char upper(const char c){
 
 //Check if it is either A,C,G,T,N
 inline bool isValidDNA(const char c){
-    if(c ==    'A')
+    char _c= upper(c);
+
+    if(_c ==    'A')
 	return true;
-    if(c ==    'C')
+    if(_c ==    'C')
 	return true;
-    if(c ==    'G')
+    if(_c ==    'G')
 	return true;
-    if(c ==    'T')
+    if(_c ==    'T')
 	return true;
-    if(c ==    'N')
+    if(_c ==    'N')
 	return true;
     return false;
 }
 
+
+
+//Check if it is either on of the ambiguous UIPAC code
+inline bool isAmbiguousUIPAC(const char c){
+    char _c= upper(c);
+
+    if(_c ==    'R')
+	return true;
+    if(_c ==    'Y')
+	return true;
+    if(_c ==    'S')
+	return true;
+    if(_c ==    'W')
+	return true;
+    if(_c ==    'K')
+	return true;
+    if(_c ==    'M')
+	return true;
+    if(_c ==    'B')
+	return true;
+    if(_c ==    'D')
+	return true;
+    if(_c ==    'H')
+	return true;
+    if(_c ==    'V')
+	return true;
+
+    return false;
+}
+
+
+
+
 //Check if it is either A,C,G,T
 inline bool isResolvedDNA(const char c){
-    if(c ==    'A')
+    char _c= upper(c);
+
+    if(_c ==    'A')
 	return true;
-    if(c ==    'C')
+    if(_c ==    'C')
 	return true;
-    if(c ==    'G')
+    if(_c ==    'G')
 	return true;
-    if(c ==    'T')
+    if(_c ==    'T')
 	return true;
     return false;
 }
+
 inline int base2int(const char c){
-    if(c ==    'N')
+    char _c= upper(c);
+
+    if(_c ==    'N')
 	return 0;
-    if(c ==    'A')
+    if(_c ==    'A')
 	return 1;
-    if(c ==    'C')
+    if(_c ==    'C')
 	return 2;
-    if(c ==    'G')
+    if(_c ==    'G')
 	return 3;
-    if(c ==    'T')
+    if(_c ==    'T')
 	return 4;
     cerr<<"utils.h base2int() Invalid base "<<c<<endl;
     exit(1);
 }
 
 inline int baseResolved2int(const char c){
-    if(c == 'A')
+    char _c= upper(c);
+    if(_c == 'A')
 	return 0;
-    if(c == 'C')
+    if(_c == 'C')
 	return 1;
-    if(c == 'G')
+    if(_c == 'G')
 	return 2;
-    if(c == 'T')
+    if(_c == 'T')
 	return 3;
     cerr<<"utils.h baseResolved2int() Invalid base "<<c<<endl;
     exit(1);
@@ -95,14 +136,17 @@ inline int baseResolved2int(const char c){
 
 //Returns an index for every 2mer of different base A,C,G,T
 inline int dimer2index(const char c1,const char c2){
+    char _c1= upper(c1);
+    char _c2= upper(c2);
 
-    if(c1     ==    'A'){
 
-	if(c2 ==    'C')
+    if(_c1     ==    'A'){
+
+	if(_c2 ==    'C')
 	    return 0;
-	if(c2 ==    'G')
+	if(_c2 ==    'G')
 	    return 1;
-	if(c2 ==    'T')
+	if(_c2 ==    'T')
 	    return 2;
 
 	cerr<<"Utils.h:1 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
@@ -110,13 +154,13 @@ inline int dimer2index(const char c1,const char c2){
     }
 
 
-    if(c1     ==    'C'){
+    if(_c1     ==    'C'){
 
-	if(c2 ==    'A')
+	if(_c2 ==    'A')
 	    return 3;
-	if(c2 ==    'G')
+	if(_c2 ==    'G')
 	    return 4;
-	if(c2 ==    'T')
+	if(_c2 ==    'T')
 	    return 5;
 
 	cerr<<"Utils.h:2 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
@@ -124,13 +168,13 @@ inline int dimer2index(const char c1,const char c2){
     }
 
 
-    if(c1     ==    'G'){
+    if(_c1     ==    'G'){
 
-	if(c2 ==    'A')
+	if(_c2 ==    'A')
 	    return 6;
-	if(c2 ==    'C')
+	if(_c2 ==    'C')
 	    return 7;
-	if(c2 ==    'T')
+	if(_c2 ==    'T')
 	    return 8;
 
 	cerr<<"Utils.h:3 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
@@ -139,13 +183,13 @@ inline int dimer2index(const char c1,const char c2){
 
 
 
-    if(c1     ==    'T'){
+    if(_c1     ==    'T'){
 
-	if(c2 ==    'A')
+	if(_c2 ==    'A')
 	    return 9;
-	if(c2 ==    'C')
+	if(_c2 ==    'C')
 	    return 10;
-	if(c2 ==    'G')
+	if(_c2 ==    'G')
 	    return 11;
 
 	cerr<<"Utils.h:4 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
@@ -163,16 +207,18 @@ inline int dimer2index(const char c1,const char c2){
 
 //Returns an index for every 2mer of different
 inline int twoBases2index(const char c1,const char c2){
+    char _c1= upper(c1);
+    char _c2= upper(c2);
 
-    if(c1     ==    'A'){
+    if(_c1     ==    'A'){
 
-	if(c2 ==    'A')
+	if(_c2 ==    'A')
 	    return 0;
-	if(c2 ==    'C')
+	if(_c2 ==    'C')
 	    return 1;
-	if(c2 ==    'G')
+	if(_c2 ==    'G')
 	    return 2;
-	if(c2 ==    'T')
+	if(_c2 ==    'T')
 	    return 3;
 
 	cerr<<"Utils.h:1 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
@@ -180,16 +226,16 @@ inline int twoBases2index(const char c1,const char c2){
     }
 
 
-    if(c1     ==    'C'){
+    if(_c1     ==    'C'){
 
 
-	if(c2 ==    'A')
+	if(_c2 ==    'A')
 	    return 4;
-	if(c2 ==    'C')
+	if(_c2 ==    'C')
 	    return 5;
-	if(c2 ==    'G')
+	if(_c2 ==    'G')
 	    return 6;
-	if(c2 ==    'T')
+	if(_c2 ==    'T')
 	    return 7;
 
 	cerr<<"Utils.h:2 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
@@ -197,15 +243,15 @@ inline int twoBases2index(const char c1,const char c2){
     }
 
 
-    if(c1     ==    'G'){
+    if(_c1     ==    'G'){
 
-	if(c2 ==    'A')
+	if(_c2 ==    'A')
 	    return 8;
-	if(c2 ==    'C')
+	if(_c2 ==    'C')
 	    return 9;
-	if(c2 ==    'G')
+	if(_c2 ==    'G')
 	    return 10;
-	if(c2 ==    'T')
+	if(_c2 ==    'T')
 	    return 11;
 
 
@@ -215,15 +261,15 @@ inline int twoBases2index(const char c1,const char c2){
 
 
 
-    if(c1     ==    'T'){
+    if(_c1     ==    'T'){
 
-	if(c2 ==    'A')
+	if(_c2 ==    'A')
 	    return 12;
-	if(c2 ==    'C')
+	if(_c2 ==    'C')
 	    return 13;
-	if(c2 ==    'G')
+	if(_c2 ==    'G')
 	    return 14;
-	if(c2 ==    'T')
+	if(_c2 ==    'T')
 	    return 15;
 
 	cerr<<"Utils.h:4 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
@@ -802,65 +848,67 @@ static inline void trimWhiteSpacesBothEnds(string * str) {
  * TT 15
 */
 inline int allelePair2Int(char bp1,char bp2){
+    char _bp1= upper(bp1);
+    char _bp2= upper(bp2);
 
-    if(bp1 == 'A'){
-	if(bp2 == 'A'){
+    if(_bp1 == 'A'){
+	if(_bp2 == 'A'){
 	    return 0;
 	}
-	if(bp2 == 'C'){
+	if(_bp2 == 'C'){
 	    return 1;
 	}
-	if(bp2 == 'G'){
+	if(_bp2 == 'G'){
 	    return 2;
 	}
-	if(bp2 == 'T'){
+	if(_bp2 == 'T'){
 	    return 3;
 	}
     }
 
-    if(bp1 == 'C'){
-	if(bp2 == 'C'){
+    if(_bp1 == 'C'){
+	if(_bp2 == 'C'){
 	    return 5;
 	}
-	if(bp2 == 'T'){
+	if(_bp2 == 'T'){
 	    return 7;
 	}
-	if(bp2 == 'A'){
+	if(_bp2 == 'A'){
 	    return 4;
 	}
-	if(bp2 == 'G'){
+	if(_bp2 == 'G'){
 	    return 6;
 	}
     }
 
 
-    if(bp1 == 'G'){
-	if(bp2 == 'G'){
+    if(_bp1 == 'G'){
+	if(_bp2 == 'G'){
 	    return 10;
 	}
-	if(bp2 == 'A'){
+	if(_bp2 == 'A'){
 	    return 8;
 	}
-	if(bp2 == 'C'){
+	if(_bp2 == 'C'){
 	    return 9;
 	}
-	if(bp2 == 'T'){
+	if(_bp2 == 'T'){
 	    return 11;
 	}
     }
 
 
-    if(bp1 == 'T'){
-	if(bp2 == 'T'){
+    if(_bp1 == 'T'){
+	if(_bp2 == 'T'){
 	    return 15;
 	}
-	if(bp2 == 'G'){
+	if(_bp2 == 'G'){
 	    return 14;
 	}
-	if(bp2 == 'A'){
+	if(_bp2 == 'A'){
 	    return 12;
 	}
-	if(bp2 == 'C'){
+	if(_bp2 == 'C'){
 	    return 13;
 	}
     }
@@ -874,32 +922,34 @@ inline int allelePair2Int(char bp1,char bp2){
 
 
 inline int isPotentialTransition(const char bp1,const char bp2){
+    char _bp1= upper(bp1);
+    char _bp2= upper(bp2);
 
-    if(bp1 == 'A'){
-	if(bp2 == 'G'){
+    if(_bp1 == 'A'){
+	if(_bp2 == 'G'){
 	    return true;
 	}
 	return false;
     }
 
-    if(bp1 == 'C'){
-	if(bp2 == 'T'){
-	    return true;
-	}
-	return false;
-    }
-
-
-    if(bp1 == 'G'){
-	if(bp2 == 'A'){
+    if(_bp1 == 'C'){
+	if(_bp2 == 'T'){
 	    return true;
 	}
 	return false;
     }
 
 
-    if(bp1 == 'T'){
-	if(bp2 == 'C'){
+    if(_bp1 == 'G'){
+	if(_bp2 == 'A'){
+	    return true;
+	}
+	return false;
+    }
+
+
+    if(_bp1 == 'T'){
+	if(_bp2 == 'C'){
 	    return true;
 	}
 	return false;

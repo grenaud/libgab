@@ -15,7 +15,7 @@ using namespace std;
 
 int main (int argc, char *argv[]) {
     for (unsigned i=0; i<20; i++){
-	cout<<randomInt(0,0)<<endl;
+	cout<<randomInt(20,20)<<endl;
     }
     return 0;
     // double  data2[] = { -1747.38   ,     -393.709    ,    -463.553  ,      -742.378 };
