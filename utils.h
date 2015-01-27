@@ -1151,16 +1151,17 @@ inline pair<double,double> computeMeanSTDDEV(vector<double> & v){
 }
 
 
-inline unsigned int nChoosek( unsigned int n, unsigned int k ){
+inline uint64_t nChoosek( uint64_t n, uint64_t k ){
     if (k > n) return 0;
     if (k * 2 > n) k = n-k;
     if (k == 0) return 1;
     
-    unsigned int result = n;
-    for(unsigned int i = 2; i <= k; ++i ) {
-	result *= (n-i+1);
+    uint64_t result = n-k+1;
+    for(uint64_t i = 2; i <= k; ++i ) {
+	result *= (n-k+i);
 	result /= i;
     }
+
     return result;
 }
 
