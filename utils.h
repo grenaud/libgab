@@ -747,6 +747,29 @@ inline int randomInt(int minV,int maxV){
     return temp + minV;
 }
 
+
+//returns an int betwen minV and maxV inclusive
+inline long double randomLongDouble(long double minV,long double maxV){
+    if(!srandCalled){
+	timeval time;
+	gettimeofday(&time, NULL);
+	srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	srandCalled=true;
+    }
+    
+    
+    if( (maxV) < (minV) ){
+	cerr<<"Utils.h randomInt cannot generate an int between "<<minV<<" and "<<maxV<<endl;
+	exit(1);
+    }
+
+    long double temp  = ( (long double)( rand() ) ) / ( (long double)(RAND_MAX) ) ;
+    temp = temp * (maxV-minV);
+    return temp + minV;
+}
+
+
+
 inline double randomProb(){ //returns between 0 and 1
     if(!srandCalled){
 	timeval time;

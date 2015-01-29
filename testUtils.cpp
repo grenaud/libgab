@@ -15,6 +15,10 @@ using namespace std;
 
 int main (int argc, char *argv[]) {
 
+    for(int tsss=0;tsss<2000;tsss++){
+	cout<<randomLongDouble(0.1,0.5)<<endl;
+    }
+    return 0;
 
     for(int tsss=0;tsss<44;tsss++){
 	cout<<tsss<<"\t"<<( (nChoosek(44,tsss)) )<<endl;
