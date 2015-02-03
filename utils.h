@@ -1401,6 +1401,29 @@ inline pair<T,T> firstAndSecondHighestArray(const T toSearch[] ,const int size){
     return toreturn;
 }
 
+inline string runCmdAndCaptureSTDOUTandSTDERR(string cmd) {//sorry for the long name
+    string data="";
+
+    const int bufferSize = 1024;
+    char buffer[bufferSize];
+    cmd+= " 2>&1 ";
+
+    FILE * outstd = popen(cmd.c_str(), "r");
+    if (outstd) {
+	while (!feof(outstd)){
+	    if (fgets(buffer, bufferSize, outstd) != NULL){
+		data+=string(buffer);
+	    }
+	}
+	pclose(outstd);
+    }else{
+	cerr<<"Problem executing or reading command "<<cmd<<" exiting"<<endl;
+	exit(1);
+    }
+
+    return data;
+}
+
 #endif
 
 
