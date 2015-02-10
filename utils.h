@@ -21,16 +21,19 @@
 #include <functional> 
 #include <sys/time.h> //for srand
 #include <iterator>
+
+
 //For directory/file operations
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h> 
 #include <dirent.h>
 #include <gzstream.h>
+#include <errno.h>
+#include <sys/resource.h>
 
 
 using namespace std;
-
 
 
 inline char upper(const char c){
@@ -1422,6 +1425,36 @@ inline string runCmdAndCaptureSTDOUTandSTDERR(string cmd) {//sorry for the long 
     }
 
     return data;
+}
+
+
+
+
+inline string returnFileDescriptorStats(){
+    struct stat   statFD;
+    struct rlimit rlimitFD;
+    string        toReturn="";
+
+    int fileDMAX = getdtablesize();
+     
+    int currentFD = 0;
+    for(int i=0;i<=fileDMAX; i++ ) {
+	fstat(i, &statFD);
+	if(errno != EBADF) 
+	    currentFD++;	
+    }
+     
+    toReturn+=
+	"fds currently open      :\t"+stringify(currentFD)+
+	"fds max. lim            :\t"+stringify(fileDMAX);
+
+    getrlimit(RLIMIT_NOFILE, &rlimitFD);
+
+    toReturn+=
+	"resource currrent limit :\t"+stringify(rlimitFD.rlim_cur) +
+	"resource max limit fds  :\t"+stringify(rlimitFD.rlim_max);
+    
+    return toReturn;
 }
 
 #endif
