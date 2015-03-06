@@ -34,7 +34,7 @@
 
 
 using namespace std;
-
+static bool srand48Called=false;
 
 inline char upper(const char c){
     return char(toupper(c));
@@ -733,12 +733,21 @@ inline bool randomBool(){
 
 //returns an int betwen minV and maxV inclusive
 inline int randomInt(int minV,int maxV){
-    if(!srandCalled){
+
+
+    if(!srand48Called){
 	timeval time;
 	gettimeofday(&time, NULL);
-	srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
-	srandCalled=true;
+	srand48(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	srand48Called=true;
     }
+
+    /* if(!srandCalled){ */
+    /* 	timeval time; */
+    /* 	gettimeofday(&time, NULL); */
+    /* 	srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) ); */
+    /* 	srandCalled=true; */
+    /* } */
     
     
     if( (maxV) < (minV) ){
@@ -746,8 +755,11 @@ inline int randomInt(int minV,int maxV){
 	exit(1);
     }
 
-    int temp  = rand() % (maxV-minV+1);
+    int temp = drand48()*(maxV-minV+1);
     return temp + minV;
+
+    /* int temp  = rand() % (maxV-minV+1); */
+    /* return temp + minV; */
 }
 
 
@@ -796,7 +808,7 @@ inline int callRand(){
 }
 
 
-static bool srand48Called=false;
+
 inline unsigned int randomUint(){
     if(!srand48Called){
 	timeval time;
@@ -1159,7 +1171,7 @@ inline string getCWD(char *arg){
     }
 }
 
-inline pair<double,double> computeMeanSTDDEV(vector<double> & v){
+inline pair<double,double> computeMeanSTDDEV(const vector<double> & v){
     double sum = 0.0;
     for(unsigned int i=0;i<v.size();i++)
 	sum += v[i];
@@ -1455,6 +1467,45 @@ inline string returnFileDescriptorStats(){
 	"resource max limit fds  :\t"+stringify(rlimitFD.rlim_max);
     
     return toReturn;
+}
+
+inline pair<double,double> computeJackknifeConfIntervals(double S,const vector<double> & allVals){
+     pair<double,double> toreturn ;
+
+     vector<double> Spseudo;
+     double N= double(allVals.size());
+
+
+     for(unsigned int i=0;i<allVals.size();i++){
+	 Spseudo.push_back( S + (N-1.0)*(S-allVals[i]));
+	 //cout<<i<<"\t"<<Spseudo[i]<<"\t"<<allVals[i]<<"\tS="<<S<<"\t"<<(N-1.0)*( S-allVals[i])<<"\t"<<N<<endl;
+    }
+
+    double pS=0;
+
+    for(unsigned int i=0;i<allVals.size();i++){
+        pS+=Spseudo[i];
+    }
+    pS=pS/N;
+    //cout<<pS<<endl;
+    double var=0;
+    for(unsigned int i=0;i<allVals.size();i++){
+        var+= ( pow( (Spseudo[i] - pS),2.0) );
+    }
+    var =var
+        /
+        (N-1.0) ;
+    double sqrtVar= sqrt(var);
+
+    toreturn.first  = pS-1.96*sqrtVar;
+    toreturn.second = pS+1.96*sqrtVar;
+    /* pair<double,double> tempV=computeMeanSTDDEV(allVals); */
+    /* //double sqrtVar= sqrt(var); */
+
+    /* toreturn.first  = S-1.96*tempV.second; */
+    /* toreturn.second = S+1.96*tempV.second; */
+
+    return toreturn;
 }
 
 #endif

@@ -12,9 +12,45 @@
 #include "utils.h"
 
 using namespace std;
+int randIn(int n){ 
+    return rand()%n; 
+}
 
 int main (int argc, char *argv[]) {
+    
+    vector<double> vals;
+    double sumVals=0.0;
+    for (unsigned i=0; i<100; i++){
+    	vals.push_back((0.5-randomProb()/10));
+	sumVals+=vals[i];
+    }
 
+    vector<double> jackk;
+    for (unsigned i=0; i<100; i++){
+	double temp=0;
+	for (unsigned j=0; j<100; j++){
+	    if( i!=j){
+		temp+= vals[j] ;
+	    }
+	}
+	jackk.push_back(temp/99);
+    }
+
+    //cout<<&vals<<endl;
+
+    pair<double,double> testDD= computeJackknifeConfIntervals(sumVals/100,jackk);
+    cout<<(sumVals/100)<<"\t"<<testDD.first<<"\t"<<testDD.second<<endl;
+
+    
+    return 0;
+
+    // cout<<RAND_MAX<<endl;
+    for (unsigned i=0; i<1000000; i++){
+    	cout<<randomProb()<<endl;
+	//cout<<randIn(20)<<endl;
+    }
+
+    return 0;
     for(int tsss=0;tsss<2000;tsss++){
 	cout<<randomLongDouble(0.1,0.5)<<endl;
     }
