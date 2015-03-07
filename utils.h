@@ -1478,7 +1478,7 @@ inline pair<double,double> computeJackknifeConfIntervals(double S,const vector<d
 
      for(unsigned int i=0;i<allVals.size();i++){
 	 Spseudo.push_back( S + (N-1.0)*(S-allVals[i]));
-	 //cout<<i<<"\t"<<Spseudo[i]<<"\t"<<allVals[i]<<"\tS="<<S<<"\t"<<(N-1.0)*( S-allVals[i])<<"\t"<<N<<endl;
+	 /* cout<<"ps\t"<<i<<"\t"<<Spseudo[i]<<"\t"<<allVals[i]<<"\tS="<<S<<"\t"<<(N-1.0)*( S-allVals[i])<<"\t"<<N<<endl; */
     }
 
     double pS=0;
@@ -1487,7 +1487,7 @@ inline pair<double,double> computeJackknifeConfIntervals(double S,const vector<d
         pS+=Spseudo[i];
     }
     pS=pS/N;
-    //cout<<pS<<endl;
+    /* cout<<"pS "<<pS<<endl; */
     double var=0;
     for(unsigned int i=0;i<allVals.size();i++){
         var+= ( pow( (Spseudo[i] - pS),2.0) );
@@ -1495,10 +1495,14 @@ inline pair<double,double> computeJackknifeConfIntervals(double S,const vector<d
     var =var
         /
         (N-1.0) ;
-    double sqrtVar= sqrt(var);
+    /* cout<<"var "<<var<<endl; */
 
-    toreturn.first  = pS-1.96*sqrtVar;
-    toreturn.second = pS+1.96*sqrtVar;
+    double sqrtVarDivN= sqrt(var/N);
+    /* cout<<"sq var "<<sqrtVar<<endl; */
+    /* cout<<"err "<<1.96*sqrtVar<<endl; */
+
+    toreturn.first  = pS-1.96*sqrtVarDivN;
+    toreturn.second = pS+1.96*sqrtVarDivN;
     /* pair<double,double> tempV=computeMeanSTDDEV(allVals); */
     /* //double sqrtVar= sqrt(var); */
 

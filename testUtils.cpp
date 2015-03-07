@@ -17,7 +17,25 @@ int randIn(int n){
 }
 
 int main (int argc, char *argv[]) {
+    double valAll=0.108927;
+    ifstream jackFileFP;
+    vector<double> valsJ;
+
+    jackFileFP.open("/tmp/t", ios::in);
+    if (jackFileFP.good()) {
+	string jackLine;
+	while(getline(jackFileFP,jackLine)){
+	    valsJ.push_back(destringify<double>(jackLine));
+	    // vector<string> fields =allTokens(line,'\t');
+	    // unsigned int f1 = destringify<unsigned int>(fields[1]);
+	    // unsigned int f2 = destringify<unsigned int>(fields[0]);
+	}
+	jackFileFP.close();
+    }
     
+    pair<double,double> testDD2= computeJackknifeConfIntervals(valAll,valsJ);
+    cout<<(valAll)<<"\t"<<testDD2.first<<"\t"<<testDD2.second<<endl;
+    return 0;
     vector<double> vals;
     double sumVals=0.0;
     for (unsigned i=0; i<100; i++){
