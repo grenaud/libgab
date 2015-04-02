@@ -1343,6 +1343,21 @@ inline double oplus( double x, double y ){
         : y + log1p( pow( 10, x-y ) ) / log(10) ;
 }
 
+// Returns log10( pow(10,x)+pow(10,y) ), but does so without causing
+// overflow or loss of precision.
+template <typename T>
+inline T oplusInit(T x,T y ){
+
+    if( x == 0 ){ //no initialized, as log = 0 should not exist
+	return y;
+    }
+
+    return x > y 
+        ? x + log1p( pow( 10, y-x ) ) / log(10)
+        : y + log1p( pow( 10, x-y ) ) / log(10) ;
+}
+
+
 
 template <typename T>
 inline pair<T,T> firstAndSecondHighestVector(const vector<T> & toSearch){
