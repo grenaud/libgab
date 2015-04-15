@@ -1337,11 +1337,23 @@ inline bool isMac(string const & filetotest) {
 
 // Returns log10( pow(10,x)+pow(10,y) ), but does so without causing
 // overflow or loss of precision.
-inline double oplus( double x, double y ){
+template <typename T>
+inline double oplus( T x, T y ){
     return x > y 
         ? x + log1p( pow( 10, y-x ) ) / log(10)
         : y + log1p( pow( 10, x-y ) ) / log(10) ;
 }
+
+
+// Returns log( exp(x)+exp(y) ), but does so without causing
+// overflow or loss of precision.
+template <typename T>
+inline double opluse( T x, T y ){
+    return x > y 
+        ? x + log1p( exp(y-x ) ) 
+        : y + log1p( exp(x-y ) ) ;
+}
+
 
 // Returns log10( pow(10,x)+pow(10,y) ), but does so without causing
 // overflow or loss of precision.

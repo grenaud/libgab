@@ -17,6 +17,16 @@ int randIn(int n){
 }
 
 int main (int argc, char *argv[]) {
+
+    long double v1=(0.5);
+    long double v2=(0.4);
+    long double v1l=logl(v1);
+    long double v2l=logl(v2);
+    cout<<opluse(v1l,v2l)<<"\t"<<exp(opluse(v1l,v2l))<<"\t"<<(v1+v2)<<"\t"<<( exp(opluse(v1l,v2l)) - (v1+v2)) <<endl;
+    //cout<<v1<<endl;
+    
+    return 1;
+
     double valAll=0.108927;
     ifstream jackFileFP;
     vector<double> valsJ;
