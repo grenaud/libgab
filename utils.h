@@ -31,6 +31,7 @@
 #include <gzstream.h>
 #include <errno.h>
 #include <sys/resource.h>
+#include <pwd.h>
 
 
 using namespace std;
@@ -207,6 +208,73 @@ inline int dimer2index(const char c1,const char c2){
 
 
 
+//Returns an index for every 2mer of different base A=0,C=1,G=2,T=3
+inline int dimer2indexInt(const int c1,const int c2){
+		
+    if(c1     ==    0){
+
+	if(c2 ==    1)
+	    return 0;
+	if(c2 ==    2)
+	    return 1;
+	if(c2 ==    3)
+	    return 2;
+
+	cerr<<"Utils.h:1 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+    if(c1     ==    1){
+
+	if(c2 ==    0)
+	    return 3;
+	if(c2 ==    2)
+	    return 4;
+	if(c2 ==    3)
+	    return 5;
+
+	cerr<<"Utils.h:2 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+    if(c1     ==    2){
+
+	if(c2 ==    0)
+	    return 6;
+	if(c2 ==    1)
+	    return 7;
+	if(c2 ==    3)
+	    return 8;
+
+	cerr<<"Utils.h:3 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+
+    if(c1     ==    3){//3
+
+	if(c2 ==    0)
+	    return 9;
+	if(c2 ==    1)
+	    return 10;
+	if(c2 ==    2)
+	    return 11;
+
+	cerr<<"Utils.h:4 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
+	exit(1);
+    }
+
+
+
+    cerr<<"Utils.h:5 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
+    exit(1);
+}
+
+
+
 
 //Returns an index for every 2mer of different
 inline int twoBases2index(const char c1,const char c2){
@@ -321,6 +389,28 @@ inline char complement(const char c){
 	return 'N';
 
     cerr<<"Utils.h: complement: Invalid base pair="<<c<<endl;
+    exit(1);
+}
+
+//A=0,C=1,G=2,T=3
+inline int complementInt(const int c){
+    if( c>=0 && c<=3 )
+	return (3-c);
+
+    /* if(c ==     0) */
+    /* 	return  3; */
+
+    /* if(c ==     1) */
+    /* 	return  2; */
+
+    /* if(c ==     2) */
+    /* 	return  1; */
+
+    /* if(c ==     3) */
+    /* 	return  0; */
+
+
+    cerr<<"Utils.h: complementInt: Invalid base pair="<<c<<endl;
     exit(1);
 }
 
@@ -834,6 +924,30 @@ inline char randomBPExcept(const char c){
     return "ACGT"[ rand()%4 ];
 }
 
+//A=0,C=1,G=2,T=3
+inline int randomBPExceptInt(const int c){
+    if(c ==    0)
+	return randomInt(1,3);
+
+    if(c ==    1){
+	int tr=randomInt(1,3);
+	if(tr == 1) tr=0;
+	return tr;
+    }
+
+    if(c ==    2){
+	int tr=randomInt(0,2);
+	if(tr == 2) tr=3;
+	return tr;
+    }
+
+    if(c ==    3)
+	return randomInt(0,2);
+
+    return randomInt(0,3);
+}
+
+
 inline string randomDNASeq(int desiredLength){
   string toreturn="";
   if(!srandCalled){
@@ -1153,7 +1267,7 @@ inline vector<T>  vectorDist(const vector<T> & toEvaluate){
 
 
 inline string getCWD(char *arg){
-    string tm=string(arg);
+    //string tm=string(arg);
     char actualpath [PATH_MAX+1];
     char * returnRealpath = realpath(arg, actualpath);
     
@@ -1170,6 +1284,40 @@ inline string getCWD(char *arg){
 	return vectorToString(token,"/")+"/";
     }
 }
+
+inline string getHomeDir(){
+    struct passwd *pw = getpwuid(getuid());
+    const char *homedir = pw->pw_dir;
+    return string(homedir);
+}
+
+inline string getFullPath(const string & st){
+    vector<string> token=allTokens( st,'/');
+    //sub the ~ for the home dir
+    for(unsigned int i=0;i<token.size();i++)  
+	if(token[i] == "~")  
+	    token[i]=getHomeDir();
+    string stT=vectorToString(token,"/");
+    char actualpath [PATH_MAX+1];
+    char * returnRealpath = realpath(stT.c_str(), actualpath);
+    
+    if(returnRealpath == NULL){
+	cerr<<"utils.h getFullPath failed on "<<st<<endl;
+	exit(1);
+    }
+
+    if(isDirectory(actualpath)){
+	token=allTokens( string(actualpath),'/');
+    
+	if(strEndsWith(vectorToString(token,"/"),"/")){
+	    return vectorToString(token,"/");
+	}else{
+	    return vectorToString(token,"/")+"/";
+	}
+    }else
+	return actualpath;
+}
+
 
 inline pair<double,double> computeMeanSTDDEV(const vector<double> & v){
     double sum = 0.0;
@@ -1338,25 +1486,15 @@ inline bool isMac(string const & filetotest) {
 // Returns log10( pow(10,x)+pow(10,y) ), but does so without causing
 // overflow or loss of precision.
 template <typename T>
-inline double oplus( T x, T y ){
+inline T oplus( T x, T y ){
     return x > y 
         ? x + log1p( pow( 10, y-x ) ) / log(10)
         : y + log1p( pow( 10, x-y ) ) / log(10) ;
 }
 
-
-// Returns log( exp(x)+exp(y) ), but does so without causing
-// overflow or loss of precision.
-template <typename T>
-inline double opluse( T x, T y ){
-    return x > y 
-        ? x + log1p( exp(y-x ) ) 
-        : y + log1p( exp(x-y ) ) ;
-}
-
-
 // Returns log10( pow(10,x)+pow(10,y) ), but does so without causing
 // overflow or loss of precision.
+// discards x if not initialized (x=0)
 template <typename T>
 inline T oplusInit(T x,T y ){
 
@@ -1368,6 +1506,59 @@ inline T oplusInit(T x,T y ){
         ? x + log1p( pow( 10, y-x ) ) / log(10)
         : y + log1p( pow( 10, x-y ) ) / log(10) ;
 }
+
+
+// Returns log10l( powl(10,x)+powl(10,y) ), but does so without causing
+// overflow or loss of precision.
+template <typename T>
+inline T oplusl( T x, T y ){
+    return x > y 
+        ? x + log1pl( powl( 10, y-x ) ) / logl(10)
+        : y + log1pl( powl( 10, x-y ) ) / logl(10) ;
+}
+
+// Returns log10l( powl(10,x)+powl(10,y) ), but does so without causing
+// overflow or loss of precision.
+// discards x if not initialized (x=0)
+template <typename T>
+inline T oplusInitl(T x,T y ){
+
+    if( x == 0 ){ //no initialized, as log = 0 should not exist
+	return y;
+    }
+
+    return x > y 
+        ? x + log1pl( powl( 10, y-x ) ) / logl(10)
+        : y + log1pl( powl( 10, x-y ) ) / logl(10) ;
+}
+
+
+
+
+// Returns log( expl(x)+expl(y) ), but does so without causing
+// overflow or loss of precision.
+template <typename T>
+inline T oplusnatl( T x, T y ){
+    return x > y 
+        ? x + log1pl( expl( y-x ) ) 
+        : y + log1pl( expl( x-y ) )  ;
+}
+
+// Returns log( expl(x)+expl(y) ), but does so without causing
+// overflow or loss of precision.
+// discards x if not initialized (x=0)
+template <typename T>
+inline T oplusInitnatl(T x,T y ){
+
+    if( x == 0 ){ //no initialized, as log = 0 should not exist
+	return y;
+    }
+
+    return x > y 
+        ? x + log1pl( expl( y-x ) ) 
+        : y + log1pl( expl( x-y ) )  ;
+}
+
 
 
 
