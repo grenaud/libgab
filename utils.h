@@ -948,6 +948,62 @@ inline int randomBPExceptInt(const int c){
 }
 
 
+//A=0,C=1,G=2,T=3
+inline int randomBPExceptIntTS(const int c){
+    if(c ==    0)
+	return 2;
+    if(c ==    1)
+	return 3;
+    if(c ==    2)
+	return 0;
+    if(c ==    3)
+	return 1;
+
+	
+    cerr<<"Utils.h randomBPExceptIntTS wrong input: "<<c<<endl;
+    exit(1);	
+}
+
+//A=0,C=1,G=2,T=3
+inline int randomBPExceptIntTV(const int c){
+    if(c ==    0 || c==2){//A,G
+	if(randomBool())
+	    return 1;//C
+	else
+	    return 3;//T
+	//	return 2;
+    }
+
+    if(c ==    1 || c==3){//C,T
+	if(randomBool())
+	    return 0;//A
+	else
+	    return 2;//G
+	//	return 3;
+    }
+
+    /* if(c ==    2){//G */
+    /* 	if(randomBool()) */
+    /* 	    return 1;//A */
+    /* 	else */
+    /* 	    return 3;//G */
+    /* 	//	return 0; */
+    /* } */
+
+    /* if(c ==    3){//T */
+    /* 	if(randomBool()) */
+    /* 	    return 0;//A */
+    /* 	else */
+    /* 	    return 2;//G */
+    /* 	//return 1; */
+    /* } */
+
+	
+    cerr<<"Utils.h randomBPExceptIntTV wrong input: "<<c<<endl;
+    exit(1);	
+}
+
+
 inline string randomDNASeq(int desiredLength){
   string toreturn="";
   if(!srandCalled){

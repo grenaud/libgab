@@ -18,6 +18,10 @@ int randIn(int n){
 
 int main (int argc, char *argv[]) {
 
+    cout<<getDateString()<<endl;
+    cout<<getTimeString()<<endl;
+
+    return 1;
     long double v1=(0.5);
     long double v2=(0.4);
     long double v1l=logl(v1);
