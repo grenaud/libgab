@@ -1,5 +1,4 @@
 BAMTOOLS= $(realpath ../bamtools/)
-
 CXX      = g++ #-g  -pg
 CXXFLAGS = -Wall  -lm -O3 -I. -Igzstream/ -I${BAMTOOLS}/include/ -c 
 LDLIBS   = -lz

@@ -17,7 +17,57 @@ int randIn(int n){
 }
 
 int main (int argc, char *argv[]) {
+    // cout<<("19"<"1")<<endl;
+    // return 1;
+    
+    // cout<<compare2Chrs("chr10","chr1")<<endl;
+    // cout<<compare2Chrs("chr20","chr1")<<endl;
+    //cout<<compare2Chrs("chrX","chrUn")<<endl;
 
+    //return 1;
+    string  horsechr[] = { "chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chr1","chr20","chr21","chr22","chr23","chr24","chr25","chr26","chr27","chr28","chr29","chr2","chr30","chr31","chr3","chr4","chr5","chr6","chr7","chr8","chr9","chrX","chrUn"};
+
+
+     vector<string> horsechrV (horsechr, horsechr + sizeof(horsechr) / sizeof(horsechr[0]) );
+     
+     // cout<<sizeof(horsechr)<<endl;
+     // cout<<sizeof(horsechr[0])<<endl;
+     // cout<<horsechrV.size()<<endl;
+
+    string  humanchr[] = { "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","X","Y","MT"};
+
+     vector<string> humanchrV (humanchr, humanchr + sizeof(humanchr) / sizeof(humanchr[0]) );
+
+     for (unsigned int i=0; i< horsechrV.size(); i++){
+     	 cout<<i<<"\t"<<horsechrV[i]<<endl;
+     }
+     //return 1; 
+     for (unsigned int i=0; i< humanchrV.size(); i++){
+     	 cout<<i<<"\t"<<humanchrV[i]<<endl;
+     }
+
+
+
+     sort(horsechrV.begin(), horsechrV.end(), cmp2Chrs );
+     sort(humanchrV.begin(), humanchrV.end(), cmp2Chrs );
+    
+     for (unsigned int i=0; i< horsechrV.size(); i++){
+	 cout<<i<<"\t"<<horsechrV[i]<<endl;
+     }
+     for (unsigned int i=0; i< humanchrV.size(); i++){
+     	 cout<<i<<"\t"<<humanchrV[i]<<endl;
+     }
+
+    // cout<<compare2Chrs("1","2")<<endl;
+    // cout<<compare2Chrs("10","MT")<<endl;
+    // cout<<compare2Chrs("chr11","chr22")<<endl;
+
+    // cout<<compare2Chrs("12","2")<<endl;
+    // cout<<compare2Chrs("X","MT")<<endl;
+    // cout<<compare2Chrs("chrX","chrUn")<<endl;
+
+
+    return 1;
     cout<<getDateString()<<endl;
     cout<<getTimeString()<<endl;
 

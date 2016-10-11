@@ -1786,6 +1786,173 @@ inline pair<double,double> computeJackknifeConfIntervals(double S,const vector<d
     return toreturn;
 }
 
+
+//Procedure to compare chromosome names returns 
+// -1 if chr1<chr2
+//  0 if both chromosomes are equal
+//  1 if chr1>chr2
+inline int compare2Chrs(const string & chr1,const string & chr2){
+
+    /* cout<<chr1<<"\t"<<chr2<<endl; */
+
+    if(chr1==chr2)
+	return 0;
+    
+    //try to convert chr1 to int
+
+    istringstream i1(chr1);
+    int           chr1int;
+    bool is1anint= (i1 >> chr1int);//true if worked, false otherwise
+
+    istringstream i2(chr2);
+    int           chr2int;
+    bool is2anint= (i2 >> chr2int);//true if worked, false otherwise
+
+    if( is1anint &&   is2anint){
+	if(chr1int<chr2int)
+	    return -1;
+	if(chr1int>chr2int)
+	    return  1;
+    }
+
+    //we imagine with 1000 Genomes, the 1..22 come before the rest MT etc
+    if(!is1anint &&  is2anint){
+	return   1;
+    }
+
+    //we imagine with 1000 Genomes, the 1..22 come before the rest
+    if( is1anint &&  !is2anint){
+	return  -1;
+    }
+
+    //we imagine with 1000 Genomes, the 1..22 come before the rest
+    if( !is1anint && !is2anint){
+	unsigned int commonPrefixLength=0;
+	unsigned int minSize = min( chr1.size() ,chr2.size() );
+
+	for(commonPrefixLength=0;commonPrefixLength<minSize;commonPrefixLength++){
+	    if( chr1[commonPrefixLength] != chr2[commonPrefixLength] ){
+		break;
+	    }else{
+		//just capture the common letters
+		if( isdigit(chr1[commonPrefixLength] ) )
+		    break;
+	    }
+
+	}
+	
+	if(commonPrefixLength == 0) { //no common prefix
+	    if(chr1<chr2)
+		return -1;
+	    if(chr1>chr2)
+		return  1;
+	}else{
+	    string chr1_ = chr1.substr(commonPrefixLength);
+	    string chr2_ = chr2.substr(commonPrefixLength);
+	    //cout<<chr1_<<"#"<<chr2_<<endl;
+
+	    istringstream i1_(chr1_);
+	    is1anint= (i1_ >> chr1int);//true if worked, false otherwise
+
+	    istringstream i2_(chr2_);
+	    is2anint= (i2_ >> chr2int);//true if worked, false otherwise
+
+
+	    if( is1anint &&   is2anint){
+		//cout<<chr1_<<"#"<<chr2_<<endl;
+		/* if(chr1_<chr2_) */
+		/*     return -1; */
+		/* if(chr1_>chr2_) */
+		/*     return  1; */
+		unsigned int commonPrefixLength2=0;
+		for(commonPrefixLength2=0;commonPrefixLength2<minSize;commonPrefixLength2++){
+		    if( chr1_[commonPrefixLength2] != chr2_[commonPrefixLength2] ){
+			break;
+		    }
+		    		    
+		}
+		//cout<<"commonPrefixLength2\t"<<commonPrefixLength2<<endl;
+		
+
+		if(commonPrefixLength2 == 0){
+		    
+		    if(chr1_<chr2_)
+			return -1;
+		    if(chr1_>chr2_)
+			return  1;
+
+		}else{
+		  
+		    if(chr1_.size() > chr2_.size() ){
+			return -1;
+		    }else{
+			if(chr1_.size() < chr2_.size() ){
+			    return 1;
+			}else{			    
+			    /* cerr<<"Invalid state#2 in compare2Chrs()"<<endl; */
+			    /* exit(1); */
+			    if(chr1_<chr2_)
+				return -1;
+			    if(chr1_>chr2_)
+				return  1;
+			}
+		    }
+		}
+
+	    }
+
+	    //we imagine with 1000 Genomes, the 1..22 come before the rest MT etc
+	    if(!is1anint &&  is2anint){
+		return   1;
+	    }
+
+	    //we imagine with 1000 Genomes, the 1..22 come before the rest
+	    if( is1anint &&  !is2anint){
+		return  -1;
+	    }
+
+	    //we imagine with 1000 Genomes, the 1..22 come before the rest
+	    if( !is1anint && !is2anint){
+		//cout<<chr1_<<"#"<<chr2_<<endl;
+
+		if(chr1_.size() < chr2_.size() ){
+		    return -1;
+		}else{
+		    if(chr1_.size() > chr2_.size() ){
+			return 1;
+		    }else{	
+			if(chr1_<chr2_)
+			    return -1;
+			if(chr1_>chr2_)
+			    return  1;
+		    }
+		}
+	    }
+
+
+
+	    /* cerr<<"Invalid state#1 in compare2Chrs()"<<endl; */
+	    /* exit(1); */
+
+	    //return compare2Chrs(chr1_,chr2_);
+	}
+    }
+
+
+
+    cerr<<"Invalid state#1 in compare2Chrs()"<<endl;
+    exit(1);
+
+}
+
+
+
+inline bool cmp2Chrs(const string & a,const string & b){
+    int res = compare2Chrs(a,b);
+    return (res == -1 );
+}
+
+
 #endif
 
 
