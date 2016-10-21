@@ -1953,6 +1953,60 @@ inline bool cmp2Chrs(const string & a,const string & b){
 }
 
 
+inline char dinucleotide2uipac(const char & b1_,const char & b2_){
+    char b1;
+    char b2;
+
+    if(b1_ < b2_){
+	b1=upper(b1_);
+	b2=upper(b2_);
+    }else{
+	b1=upper(b2_);
+	b2=upper(b1_);
+    }
+
+    if(b1 == 'A'){
+
+	if(b2 == 'A')
+	    return 'A';
+	if(b2 == 'C')
+	    return 'M';
+	if(b2 == 'G')
+	    return 'R';
+	if(b2 == 'T')
+	    return 'W';       
+
+    }
+
+    if(b1 == 'C'){
+
+	if(b2 == 'C')
+	    return 'C';
+	if(b2 == 'G')
+	    return 'S';
+	if(b2 == 'T')
+	    return 'Y';       
+    }
+
+    if(b1 == 'G'){
+
+	if(b2 == 'G')
+	    return 'G';       
+	if(b2 == 'T')
+	    return 'K';       
+    }
+
+    if(b1 == 'T'){
+	if(b2 == 'T')
+	    return 'T';       
+		    
+    }
+
+    cerr<<"utils.h dinucleotide2uipac() Invalid bases "<<b1_<<" "<<b2_<<endl;
+    exit(1);
+
+}
+
 #endif
 
 

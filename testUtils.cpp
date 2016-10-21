@@ -23,8 +23,16 @@ int main (int argc, char *argv[]) {
     // cout<<compare2Chrs("chr10","chr1")<<endl;
     // cout<<compare2Chrs("chr20","chr1")<<endl;
     //cout<<compare2Chrs("chrX","chrUn")<<endl;
+    for (int i=0; i<4; i++)
+	for (int j=0; j<4; j++){
+	    char b1="ACGT"[i];
+	    char b2="ACGT"[j];
+	    cout<<b1<<" "<<b2<<"\t"<<dinucleotide2uipac(b1,b2)<<endl;
+	}
+	
 
-    //return 1;
+
+    return 1;
     string  horsechr[] = { "chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chr1","chr20","chr21","chr22","chr23","chr24","chr25","chr26","chr27","chr28","chr29","chr2","chr30","chr31","chr3","chr4","chr5","chr6","chr7","chr8","chr9","chrX","chrUn"};
 
 
