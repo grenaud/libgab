@@ -1787,6 +1787,18 @@ inline pair<double,double> computeJackknifeConfIntervals(double S,const vector<d
 }
 
 
+
+//taken from http://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int
+inline bool isInteger(const std::string & s){
+   if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+')))
+       return false ;
+   char * p ;
+   strtol(s.c_str(), &p, 10) ;
+
+   return (*p == 0) ;
+}
+
+
 //Procedure to compare chromosome names returns 
 // -1 if chr1<chr2
 //  0 if both chromosomes are equal
@@ -1802,11 +1814,15 @@ inline int compare2Chrs(const string & chr1,const string & chr2){
 
     istringstream i1(chr1);
     int           chr1int;
-    bool is1anint= (i1 >> chr1int);//true if worked, false otherwise
+    bool is1anint = isInteger(chr1);
+    if(is1anint)
+	(i1 >> chr1int);//if worked
 
     istringstream i2(chr2);
     int           chr2int;
-    bool is2anint= (i2 >> chr2int);//true if worked, false otherwise
+    bool is2anint = isInteger(chr2);
+    if(is2anint)
+	(i2 >> chr2int);//true if worked, false otherwise
 
     if( is1anint &&   is2anint){
 	if(chr1int<chr2int)
@@ -1852,10 +1868,14 @@ inline int compare2Chrs(const string & chr1,const string & chr2){
 	    //cout<<chr1_<<"#"<<chr2_<<endl;
 
 	    istringstream i1_(chr1_);
-	    is1anint= (i1_ >> chr1int);//true if worked, false otherwise
+	    is1anint = isInteger(chr1_);
+	    if(is1anint)
+		(i1_ >> chr1int);//true if worked, false otherwise
 
 	    istringstream i2_(chr2_);
-	    is2anint= (i2_ >> chr2int);//true if worked, false otherwise
+	    is2anint = isInteger(chr2_);
+	    if(is2anint)
+		(i2_ >> chr2int);//true if worked, false otherwise
 
 
 	    if( is1anint &&   is2anint){

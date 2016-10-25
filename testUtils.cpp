@@ -17,8 +17,16 @@ int randIn(int n){
 }
 
 int main (int argc, char *argv[]) {
+
+    cout<<isInteger("19")<<endl;
+    cout<<isInteger("-3924")<<endl;
+    cout<<isInteger("29349932")<<endl;
+    cout<<isInteger("19a")<<endl;
+    cout<<isInteger("-39_24")<<endl;
+    cout<<isInteger("2934+9932")<<endl;
+    
     // cout<<("19"<"1")<<endl;
-    // return 1;
+    return 1;
     
     // cout<<compare2Chrs("chr10","chr1")<<endl;
     // cout<<compare2Chrs("chr20","chr1")<<endl;
