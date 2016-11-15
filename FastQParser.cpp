@@ -1,6 +1,6 @@
 /*
  * FastQParser
- * Date: Dec-16-2012 
+ * Date: Dec-16-2012
  * Author : Gabriel Renaud gabriel.reno [at sign here ] gmail.com
  *
  */
@@ -9,7 +9,7 @@
 
 FastQParser::FastQParser(string file,bool isFasta){
     this->isFasta = isFasta;
-    
+
     fastqFile.open(file.c_str(), ios::in);    // open the streams
 
     if (fastqFile.good()) {
@@ -42,10 +42,10 @@ bool       FastQParser::hasData(){
 
 
     if(isFasta){
-	flag=getline(fastqFile,currentline1);
+	flag=(bool) getline(fastqFile,currentline1);
 	if(!flag){
 	    return false;
-	}else{	
+	}else{
 	    if(currentline1.length() > 0 && currentline1[0] != '>'){
 		cerr<<"Parse error#1 with line "<<currentline1<<endl;
 		exit(1);
@@ -55,63 +55,63 @@ bool       FastQParser::hasData(){
 	string * id = new string(currentline1);
 	string * seq = new string();
 
-	while(flag){	
+	while(flag){
 	    char peekChar=fastqFile.peek();
 	    if(peekChar ==  EOF){
-		toreturn=new FastQObj(id,seq,0,isFasta);		  
+		toreturn=new FastQObj(id,seq,0,isFasta);
 		return true;
 	    }
 
 	    if(peekChar ==  '>'){//beginning of next record
-		toreturn=new FastQObj(id,seq,0,isFasta);		      
+		toreturn=new FastQObj(id,seq,0,isFasta);
 		return true;
 	    }
 
 
-	    flag=getline(fastqFile,currentline2);
+	    flag=(bool) getline(fastqFile,currentline2);
 
 	    if(!flag){
 		cerr<<"Parse error#2 with line "<<currentline1<<endl;
 		exit(1);
-	    }else{	
-		seq->append(currentline2);		    
+	    }else{
+		seq->append(currentline2);
 	    }
 	}
 
-	
+
 
     }else{
-	flag=getline(fastqFile,currentline1);
+	flag=(bool) getline(fastqFile,currentline1);
 
 	if(!flag){
 	    return false;
-	}else{	
+	}else{
 	    if(currentline1.length() > 0 && currentline1[0] != '@'){
 		cerr<<"Parse error#3 with line "<<currentline1<<endl;
 		exit(1);
 	    }
 	}
 
-	flag=getline(fastqFile,currentline2);
+	flag= (bool) getline(fastqFile,currentline2);
 
 	if(!flag){
 	    cerr<<"Parse error#4 with line "<<currentline2<<endl;
 	    exit(1);
 	}
 
-	flag=getline(fastqFile,currentline3);
+	flag= (bool) getline(fastqFile,currentline3);
 
 	if(!flag){
 	    cerr<<"Parse error#5 with line "<<currentline3<<endl;
 	    exit(1);
-	}else{	
+	}else{
 	    if(currentline3.length() > 0 && currentline3[0] != '+'){
 		cerr<<"Parse error#6 with line "<<currentline3<<endl;
 		exit(1);
 	    }
 	}
 
-	flag=getline(fastqFile,currentline4);
+	flag=(bool) getline(fastqFile,currentline4);
 
 	if(!flag){
 	    cerr<<"Parse error#7 with line "<<currentline4<<endl;
