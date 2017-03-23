@@ -1252,7 +1252,7 @@ inline string returnGitHubVersion(const string  programName,const string  suffix
     //getting github version
     string directoryProgram;
     string commandPath=string(programName);
-    unsigned posSlash=commandPath.find_last_of("/");
+    size_t posSlash=commandPath.find_last_of("/");
     if(posSlash == string::npos){
         directoryProgram="";
     }else{
