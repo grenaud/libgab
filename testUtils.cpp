@@ -18,6 +18,14 @@ int randIn(int n){
 
 int main (int argc, char *argv[]) {
 
+    for (int i=0; i<40; i++){
+	cout<<i<<"\t"<<poisson_pmf(double(i),20)<<endl;
+    }
+    // for (int i=0; i<20; i++){
+    // 	cout<<i<<"\t"<<poisson_pmfl((long double)i,20)<<endl;
+    // }
+    
+    return 1;
     cout<<isInteger("19")<<endl;
     cout<<isInteger("-3924")<<endl;
     cout<<isInteger("29349932")<<endl;

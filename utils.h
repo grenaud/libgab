@@ -2027,6 +2027,22 @@ inline char dinucleotide2uipac(const char & b1_,const char & b2_){
 
 }
 
+//taken from http://www.masaers.com/2013/10/08/Implementing-Poisson-pmf.html
+inline double poisson_pmf(const double k, const double lambda) {
+    double lgamk = lgamma(k + 1.0);
+    double lgam  = log(lambda);
+    
+    return exp(k*lgam-lgamk-lambda);
+}
+
+inline long double poisson_pmfl(const long double k, const long double lambda) {
+    double lgamkl = lgammal(k + 1.0);
+    double lgaml  = logl(lambda);
+    
+    return expl(k*lgaml-lgamkl-lambda);
+}
+
+
 #endif
 
 
