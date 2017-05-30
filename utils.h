@@ -1715,6 +1715,33 @@ inline string runCmdAndCaptureSTDOUTandSTDERR(string cmd) {//sorry for the long 
 
 
 
+inline int returnOpenFileDescriptors(){
+    struct stat   statFD;
+
+    string        toReturn="";
+
+    int fileDMAX = getdtablesize();
+     
+    int currentFD = 0;
+    for(int i=0;i<=fileDMAX; i++ ) {
+	int statusFS=fstat(i, &statFD);
+
+	if(statusFS == -1)
+	    break;
+	
+	//if(errno != EBADF) 
+	currentFD++;	
+    }
+    return currentFD;
+}
+
+inline int returnOpenFileDescriptorsMax(){
+
+    int fileDMAX = getdtablesize();
+    return fileDMAX;
+
+}
+
 
 inline string returnFileDescriptorStats(){
     struct stat   statFD;
@@ -1725,19 +1752,23 @@ inline string returnFileDescriptorStats(){
      
     int currentFD = 0;
     for(int i=0;i<=fileDMAX; i++ ) {
-	fstat(i, &statFD);
-	if(errno != EBADF) 
-	    currentFD++;	
+	int statusFS=fstat(i, &statFD);
+
+	if(statusFS == -1)
+	    break;
+	
+	//if(errno != EBADF) 
+	currentFD++;	
     }
      
     toReturn+=
-	"fds currently open      :\t"+stringify(currentFD)+
-	"fds max. lim            :\t"+stringify(fileDMAX);
+	"fds currently open      :\t"+stringify(currentFD)+"\t"+
+	"fds max. lim            :\t"+stringify(fileDMAX)+"\t";
 
     getrlimit(RLIMIT_NOFILE, &rlimitFD);
 
     toReturn+=
-	"resource currrent limit :\t"+stringify(rlimitFD.rlim_cur) +
+	"resource currrent limit :\t"+stringify(rlimitFD.rlim_cur) +"\t"+
 	"resource max limit fds  :\t"+stringify(rlimitFD.rlim_max);
     
     return toReturn;
