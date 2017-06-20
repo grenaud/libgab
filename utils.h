@@ -586,14 +586,6 @@ inline unsigned int string2uint(const string & s){
 }
 
 
-template <typename T>
-string thousandSeparator(const T i){
-    stringstream s;
-    s.imbue(std::locale("en_US.UTF-8"));
-    s << i;
-    return s.str();
-}
-
 
 template <typename T>
 string stringify(const T i){
@@ -2071,6 +2063,45 @@ inline long double poisson_pmfl(const long double k, const long double lambda) {
     double lgaml  = logl(lambda);
     
     return expl(k*lgaml-lgamkl-lambda);
+}
+
+
+// had problems
+/* template <typename T> */
+/* string thousandSeparator(const T i){ */
+/*     stringstream s; */
+/*     s.imbue(std::locale("en_US.UTF-8")); */
+/*     s << i; */
+/*     return s.str(); */
+/* } */
+
+
+template <typename T>
+string thousandSeparator(const T i){
+    
+    if( !isInt(stringify(i)) ){
+	cerr<<"ERROR: Cannot add thousandSeparator to non-integer "<<i<<endl;
+	exit(1);
+    }
+
+    stringstream s;
+    string       s_;
+    string       sToReturn="";
+    s << i; 
+    s_ = s.str();
+
+    size_t l=0;
+    for(int i=int(s_.size()-1);i>=0;i--){
+
+	sToReturn=s_[i]+sToReturn;
+	if( (l%3)==2 && l!=0 && i!=0){
+	    sToReturn=","+sToReturn;
+	}
+
+	l++;
+    }
+    
+    return sToReturn;
 }
 
 

@@ -18,6 +18,13 @@ int randIn(int n){
 
 int main (int argc, char *argv[]) {
 
+
+    for(unsigned int c=0;c<123456789;c+=17)
+	cout<<thousandSeparator(c)<<endl;
+    // double  c2=123456789.123;
+    // cout<<thousandSeparator(c2)<<endl;
+
+    return 1;
     for (int i=0; i<40; i++){
 	cout<<i<<"\t"<<poisson_pmf(double(i),20)<<endl;
     }
