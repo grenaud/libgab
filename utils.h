@@ -1533,6 +1533,12 @@ inline bool isMac(string const & filetotest) {
 
 // Returns log10( pow(10,x)+pow(10,y) ), but does so without causing
 // overflow or loss of precision.
+// 
+// log( e^x + e^y)
+// log( e^x (1 + e^y/e^x) )
+// log( e^x ) + log (1 + e^y/e^x) )
+//        x   + log (1 + e^y/e^x) )
+//        x   + log1p( e^(y-x) ) 
 template <typename T>
 inline T oplus( T x, T y ){
     return x > y 
