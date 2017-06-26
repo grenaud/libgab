@@ -1533,7 +1533,8 @@ inline bool isMac(string const & filetotest) {
 
 // Returns log10( pow(10,x)+pow(10,y) ), but does so without causing
 // overflow or loss of precision.
-// 
+// useful if x and y are logs of probabilities
+// BEWARE: of the log base, see oplusnatl()
 // log( e^x + e^y)
 // log( e^x (1 + e^y/e^x) )
 // log( e^x ) + log (1 + e^y/e^x) )
@@ -1545,6 +1546,23 @@ inline T oplus( T x, T y ){
         ? x + log1p( pow( 10, y-x ) ) / log(10)
         : y + log1p( pow( 10, x-y ) ) / log(10) ;
 }
+
+
+/* // Returns log10( pow(10,x)-pow(10,y) ), but does so without causing */
+/* // overflow or loss of precision. */
+/* // useful if x and y are logs of probabilities */
+/* // will cause error if x<y as probabilities cannot be negative */
+/* template <typename T> */
+/* inline T ominus( T x, T y ){ */
+/*     if(x >= y)  */
+/*         return (x + log1p( -1.0*pow( 10, y-x ) ) / log(10)); */
+/*     else{ */
+/* 	cerr<<"ERROR in ominus attempt at substracting "<<y<<" from "<<x<<" and return the log"<<endl; */
+/* 	exit(1); */
+/*     }	 */
+/* } */
+
+
 
 // Returns log10( pow(10,x)+pow(10,y) ), but does so without causing
 // overflow or loss of precision.
@@ -1570,6 +1588,24 @@ inline T oplusl( T x, T y ){
         ? x + log1pl( powl( 10, y-x ) ) / logl(10)
         : y + log1pl( powl( 10, x-y ) ) / logl(10) ;
 }
+
+
+
+/* // Returns log10( pow(10,x)-pow(10,y) ), but does so without causing */
+/* // overflow or loss of precision. */
+/* // useful if x and y are logs of probabilities */
+/* // will cause error if x<y as probabilities cannot be negative */
+/* template <typename T> */
+/* inline T ominusl( T x, T y ){ */
+/*     if(x >= y)  */
+/*         return (x + log1pl( -1.0*powl( 10, y-x ) ) / logl(10)); */
+/*     else{ */
+/* 	cerr<<"ERROR in ominus attempt at substracting "<<y<<" from "<<x<<" and return the log"<<endl; */
+/* 	exit(1); */
+/*     }	 */
+/* } */
+
+
 
 // Returns log10l( powl(10,x)+powl(10,y) ), but does so without causing
 // overflow or loss of precision.
@@ -1597,6 +1633,26 @@ inline T oplusnatl( T x, T y ){
         ? x + log1pl( expl( y-x ) ) 
         : y + log1pl( expl( x-y ) )  ;
 }
+
+
+
+
+
+/* // Returns log( expl(x)+expl(y) ), but does so without causing */
+/* // overflow or loss of precision. */
+/* template <typename T> */
+/* inline T ominusnatl( T x, T y ){ */
+/*     if(x > y) */
+/*         return (x + log1pl( -1.0*expl( y-x ) )); */
+/*     else{ */
+/* 	cerr<<"ERROR in ominus attempt at substracting "<<y<<" from "<<x<<" and return the log"<<endl; */
+/* 	exit(1); */
+/*     } */
+/* } */
+
+
+
+
 
 // Returns log( expl(x)+expl(y) ), but does so without causing
 // overflow or loss of precision.

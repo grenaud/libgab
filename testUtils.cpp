@@ -19,6 +19,37 @@ int randIn(int n){
 int main (int argc, char *argv[]) {
 
 
+    // vector<long double> randomProbs;
+    // for(unsigned int i=0;i<10;i++){
+    // 	randomProbs.push_back(randomProb()/10000000);
+    // }
+    // long double sumProb =0;
+    // long double sumProbl=0;
+
+    // for(unsigned int i=0;i<10;i++){
+    // 	sumProb  += randomProbs[i];
+    // 	sumProbl =  oplusInitnatl(sumProbl,logl(randomProbs[i]));
+    // 	cout<<randomProbs[i]<<"\t"<<logl(randomProbs[i])<<endl;
+    // }
+
+    // long double sumProblm1_ =  sumProbl;
+    // long double sumProb_    =  sumProb;
+
+    // long double sumProblm1  =  ominusnatl(sumProbl, logl(randomProbs[0]));    
+    // long double sumProbm1   =  sumProb - randomProbs[0];
+
+    // cout<<setprecision(30)<<vectorToString(randomProbs,"\t")<<"\t"<<sumProb<<"\t"<<expl(sumProbl)<<"\t"<<sumProbm1<<"\t"<<expl(sumProblm1)<<endl;
+
+
+    // for(unsigned int i=0;i<10;i++){
+    // 	cout<<i<<"\t"<<sumProblm1_<<"\t"<<logl(sumProb_)<<"\t"<<sumProb_<<"\t"<<logl(randomProbs[i])<<endl;
+    // 	sumProblm1_  =  ominusnatl(sumProblm1_, logl(randomProbs[i]));    
+    // 	sumProb_    -=  randomProbs[i];
+    // 	cout<<i<<"\t"<<sumProblm1_<<"\t"<<logl(sumProb_)<<"\t"<<sumProb_<<endl;
+    // }
+    // cout<<"END\t"<<expl(sumProblm1_)<<"\t"<<sumProb_<<endl;
+    // return 0;
+
     for(unsigned int c=0;c<123456789;c+=17)
 	cout<<thousandSeparator(c)<<endl;
     // double  c2=123456789.123;
