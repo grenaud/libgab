@@ -608,6 +608,14 @@ T destringify( const string& s ){
 
 
 
+inline string printDoubleAsString(double d,int digits,int precision){
+    char buffer [digits+1+precision];
+    sprintf(buffer,"%*.*f",digits+precision,precision, d);
+    return string(buffer);
+}
+
+
+
 inline bool isInt( const string& s ){
     istringstream i(s);
     int    x;
