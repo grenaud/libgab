@@ -18,7 +18,10 @@ int randIn(int n){
 
 int main (int argc, char *argv[]) {
 
+    cout<<"#"<<printIntAsWhitePaddedString(10,3)<<"#"<<endl;
+    cout<<"#"<<printDoubleAsWhitePaddedString(12.34,3,5)<<"#"<<endl;
 
+    return 0;
     // vector<long double> randomProbs;
     // for(unsigned int i=0;i<10;i++){
     // 	randomProbs.push_back(randomProb()/10000000);

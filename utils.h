@@ -608,9 +608,15 @@ T destringify( const string& s ){
 
 
 
-inline string printDoubleAsString(double d,int digits,int precision){
-    char buffer [digits+1+precision];
-    sprintf(buffer,"%*.*f",digits+precision,precision, d);
+inline string printDoubleAsWhitePaddedString(double d,int digits,int precision){
+    char buffer [digits+2+precision];
+    sprintf(buffer,"%*.*f",digits+precision+1,precision, d);
+    return string(buffer);
+}
+
+inline string printIntAsWhitePaddedString(int i,int digits){
+    char buffer [digits+1];
+    sprintf(buffer,"%*d",digits,i);
     return string(buffer);
 }
 
