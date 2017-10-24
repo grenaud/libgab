@@ -531,6 +531,20 @@ inline vector<string> allTokens(const string  & toparse,const char  delim){
 }
 
 
+inline vector<string> allTokensWhiteSpaces(const string  & toparse){
+
+    istringstream iss(toparse);
+    //solution taken from https://stackoverflow.com/questions/236129/the-most-elegant-way-to-iterate-the-words-of-a-string
+    vector<string> toReturn; 
+ 
+    copy(istream_iterator<string>(iss),
+	 istream_iterator<string>(),
+	 back_inserter(toReturn));
+
+	       
+    return toReturn;
+}
+
 
 /* inline vector<string> allTokens(const string  & toparse,const string & delim){ */
 /*     if(delim.size() == 0){ */

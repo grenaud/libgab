@@ -17,7 +17,54 @@ int randIn(int n){
 }
 
 int main (int argc, char *argv[]) {
+    string line;
+    ifstream myFile;
+    string filename = string(argv[1]);
+    myFile.open(filename.c_str(), ios::in);
+   
+    if (myFile.is_open()){
+	while ( getline (myFile,line)){
+	    //cout<<"1#"<<line<<"#1"<<endl;
+	    trimWhiteSpacesBothEnds(&line);
+	    //cout<<"2#"<<line<<"#2"<<endl;
+	    vector<string> tokens = allTokensWhiteSpaces(line);
+	     // cout<<"3#"<<line<<"\t"<<tokens.size()<<endl;
+	     for(unsigned int i=0;i<tokens.size();i++){
+		 cout<<i<<" #"<<tokens[i]<<"#"<<endl;
+	     }
+	}
+	myFile.close();
+    }else{
+	cerr << "Unable to open file "<<filename<<endl;
+	return 1;
+    }
 
+    
+    return 0;
+    double e  = 0.2;
+    double p1 = 0.01;
+    double p2 = 0.55;
+    double r  = (1-e)*p1 +  e*p2;
+    cout<<r<<"\t"<<log(r)<<endl;
+    
+    double l1_e  = log(1-e);
+    double le    = log(e);
+    
+    double lp1   = log(p1);
+    double lp2   = log(p2);
+    
+    double lr = oplusnatl( l1_e+lp1 ,  le+lp2 );
+    cout<<exp(lr)<<"\t"<<lr<<endl;
+    return 0;
+    
+    for(int l=1;l<40;l++){
+	for(int k=1;k<=10*l;k++){
+	    cout<<l<<"\t"<<k<<"\t"<<poisson_pmf(k,l)<<"\t"<<poisson_pmf(l,l)<<"\t"<<(poisson_pmf(k,l)/poisson_pmf(l,l))<<endl;
+	}
+	cout<<endl<<"----"<<endl;
+    }
+    return 0;
+    
     cout<<"#"<<printIntAsWhitePaddedString(10,3)<<"#"<<endl;
     cout<<"#"<<printDoubleAsWhitePaddedString(12.34,3,5)<<"#"<<endl;
 
