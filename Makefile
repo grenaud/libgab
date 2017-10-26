@@ -1,6 +1,6 @@
 BAMTOOLS= $(realpath ../bamtools/)
 CXX      = g++ #-g  -pg
-CXXFLAGS = -Wall  -lm -O3 -I. -Igzstream/ -I${BAMTOOLS}/include/ -c 
+CXXFLAGS = -Wall  -lm -O3 -I. -Igzstream/ -I${BAMTOOLS}/build/src/api/include/ -I${BAMTOOLS}/build/src/include/  -c 
 LDLIBS   = -lz
 
 
@@ -17,7 +17,7 @@ testUtils:	testUtils.o  utils.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 
-testRecons:	testRecons.o  utils.o ${BAMTOOLS}/lib/libbamtools.a  ReconsReferenceBAM.o gzstream/libgzstream.a
+testRecons:	testRecons.o  utils.o ${BAMTOOLS}/build/src/api/libbamtools.a   ReconsReferenceBAM.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 %.o: %.cpp
