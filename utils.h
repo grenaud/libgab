@@ -2195,7 +2195,7 @@ string thousandSeparator(const T i){
 }
 
 //taken from https://stackoverflow.com/questions/14539867/how-to-display-a-progress-indicator-in-pure-c-c-cout-printf
-void printprogressBarCerr(float progress){
+inline void printprogressBarCerr(float progress){
     int barWidth = 70;
 
     cerr << "[";
