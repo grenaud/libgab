@@ -1,6 +1,27 @@
+
 BAMTOOLS= $(realpath ../bamtools/)
+
+#defined via user
+ifdef BAMTOOLSINC
+	BAMTOOLSINCAPI=${BAMTOOLSINC}
+	BAMTOOLSINCSHARED=${BAMTOOLSINC}
+else
+	BAMTOOLSINCAPI=${BAMTOOLS}/build/src/api/include/
+	BAMTOOLSINCSHARED=${BAMTOOLS}/build/src/include/
+endif
+
+ifdef BAMTOOLSLIB
+	BAMTOOLSLIBOBJ=${BAMTOOLSLIB}/libbamtools.a 
+else
+	BAMTOOLSLIBOBJ=${BAMTOOLS}/build/src/api/libbamtools.a 
+endif
+
+
+
+
+
 CXX      = g++ #-g  -pg
-CXXFLAGS = -Wall  -lm -O3 -I. -Igzstream/ -I${BAMTOOLS}/build/src/api/include/ -I${BAMTOOLS}/build/src/include/  -c 
+CXXFLAGS = -Wall  -lm -O3 -I. -Igzstream/ -I${BAMTOOLSINCAPI} -I${BAMTOOLSINCSHARED}  -c 
 LDLIBS   = -lz
 
 
@@ -17,7 +38,7 @@ testUtils:	testUtils.o  utils.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 
-testRecons:	testRecons.o  utils.o ${BAMTOOLS}/build/src/api/libbamtools.a   ReconsReferenceBAM.o gzstream/libgzstream.a
+testRecons:	testRecons.o  utils.o ${BAMTOOLSLIBOBJ}  ReconsReferenceBAM.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 %.o: %.cpp
