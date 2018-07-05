@@ -1344,7 +1344,13 @@ inline vector<T>  vectorDist(const vector<T> & toEvaluate){
 
 inline string getCWD(char *arg){
     //string tm=string(arg);
-    char actualpath [PATH_MAX+1];
+    int pathmaxtouse=1024;//under MacOS, PATH_MAX is defined to be 1024 in /usr/include/sys/syslimits.h
+    
+#ifdef PATH_MAX
+    pathmaxtouse=PATH_MAX;//if the max # of bytes is a path is defined
+#endif
+    
+    char actualpath [pathmaxtouse+1];
     char * returnRealpath = realpath(arg, actualpath);
     
     if(returnRealpath == NULL){
@@ -1374,7 +1380,13 @@ inline string getFullPath(const string & st){
 	if(token[i] == "~")  
 	    token[i]=getHomeDir();
     string stT=vectorToString(token,"/");
-    char actualpath [PATH_MAX+1];
+    int pathmaxtouse=1024;//under MacOS, PATH_MAX is defined to be 1024 in /usr/include/sys/syslimits.h
+    
+#ifdef PATH_MAX
+    pathmaxtouse=PATH_MAX;//if the max # of bytes is a path is defined
+#endif
+    
+    char actualpath [pathmaxtouse+1];
     char * returnRealpath = realpath(stT.c_str(), actualpath);
     
     if(returnRealpath == NULL){

@@ -17,6 +17,9 @@ int randIn(int n){
 }
 
 int main (int argc, char *argv[]) {
+
+    cerr<<getCWD(argv[0])<<endl;
+    return 0;
     string line;
     ifstream myFile;
     string filename = string(argv[1]);
