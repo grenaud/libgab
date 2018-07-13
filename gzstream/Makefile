@@ -78,10 +78,10 @@ test_gunzip : test_gunzip.o libgzstream.a
 	${CXX} -o test_gunzip test_gunzip.o ${LDFLAGS}
 
 clean :
-	rm *.o
+	rm -fv *.o
 
 cleanall :
-	rm *.o libgzstream.a test_gzip test_gunzip
+	rm -fv *.o libgzstream.a test_gzip test_gunzip
 
 # ============================================================================
 # EOF
