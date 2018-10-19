@@ -18,8 +18,12 @@ int randIn(int n){
 
 int main (int argc, char *argv[]) {
 
+
+    for(unsigned int c= 2147400000;c<10147400000;c+=1000000)
+	cout<<thousandSeparator(c)<<endl;
+        return 0;
     cerr<<getCWD(argv[0])<<endl;
-    return 0;
+
     string line;
     ifstream myFile;
     string filename = string(argv[1]);

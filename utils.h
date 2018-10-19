@@ -638,8 +638,8 @@ inline string printIntAsWhitePaddedString(int i,int digits){
 
 inline bool isInt( const string& s ){
     istringstream i(s);
-    int    x;
-    double y;
+    uint64_t    x;
+    double      y;
 
     if( !(i >> x) ){
 	return false;
@@ -647,7 +647,7 @@ inline bool isInt( const string& s ){
     
     //check if double
     if( i >> y ){
-	if(x!=int(y))
+	if(x!=uint64_t(y))
 	    return false;	
     }
 
