@@ -1341,9 +1341,7 @@ inline vector<T>  vectorDist(const vector<T> & toEvaluate){
     return toReturn;
 }
 
-
-inline string getCWD(char *arg){
-    //string tm=string(arg);
+inline char * getRealpath(const char *arg){
     int pathmaxtouse=1024;//under MacOS, PATH_MAX is defined to be 1024 in /usr/include/sys/syslimits.h
     
 #ifdef PATH_MAX
@@ -1352,12 +1350,36 @@ inline string getCWD(char *arg){
     
     char actualpath [pathmaxtouse+1];
     char * returnRealpath = realpath(arg, actualpath);
-    
-    if(returnRealpath == NULL){
-	cerr<<"utils.h getCWD failed on  "<<*arg<<endl;
-	exit(1);
+    return returnRealpath;    
+}
+
+inline char * getENV(const char *arg){
+    string envpath = string(getenv("PATH"));
+    vector<string> token=allTokens( envpath,':');
+    for(unsigned int i=0;i<token.size();i++){
+	string t=token[i]+"/"+string(arg);
+	if( isFile( t )){
+	    return getRealpath(t.c_str() );
+
+	}
     }
-    vector<string> token=allTokens( string(actualpath),'/');
+    return NULL;
+}
+
+
+
+inline string getCWD(const char *arg){
+    //string tm=string(arg);
+    char * returnRealpath = getRealpath(arg);
+    if(returnRealpath == NULL){
+	returnRealpath=getENV(arg);
+	if(returnRealpath == NULL){
+	    cerr<<"utils.h getCWD failed on  "<<*arg<<endl;
+	    exit(1);
+	}
+    }
+   
+    vector<string> token=allTokens( string(returnRealpath),'/');
     token.pop_back();
 
     if(strEndsWith(vectorToString(token,"/"),"/")){

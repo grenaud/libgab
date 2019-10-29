@@ -18,6 +18,9 @@ int randIn(int n){
 
 int main (int argc, char *argv[]) {
 
+    cerr<<getCWD(argv[0])<<endl;
+    
+    return 0;
 
     for(unsigned int c= 2147400000;c<10147400000;c+=1000000)
 	cout<<thousandSeparator(c)<<endl;
