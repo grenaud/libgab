@@ -2249,6 +2249,23 @@ inline void printprogressBarCerr(float progress){
 }
 
 
+//removes digits and dots at the end
+inline string removeDigitsDots(const string s){
+    string toreturn="";
+    bool foundNondgdot=false;
+    for(int i=int(s.size()-1);i>-1;i--){
+	if( isdigit(s[i]) || (s[i] == '.')){
+	    if(foundNondgdot) 	    toreturn = s[i]+toreturn;//we add chars once we found a non digit and dot
+	}else{
+	    foundNondgdot=true;
+	    toreturn = s[i]+toreturn;
+	}
+    }
+
+    return toreturn;
+}
+
+
 #endif
 
 
