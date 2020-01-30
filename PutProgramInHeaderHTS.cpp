@@ -40,7 +40,8 @@ void putProgramInHeaderHTS(string * header,
 			   const string & programVersion){
     //BEGIN DETECTING PREVIOUS PROGRAM
     string headerCpy (*header);
-    
+    string programCLCpy=programCL;
+    trimWhiteSpacesBothEnds(&programCLCpy);    
     vector<string> lines = allTokens(headerCpy,'\n');
     vector<pgfield> vecPGfields;
     int lastPGLine=-1;
@@ -137,6 +138,7 @@ void putProgramInHeaderHTS(string * header,
     //    exit(1);
     string newHeader="";
     for(int i=0;i<int(lines.size());i++){
+	cerr<<"nh "<<i<<"\t->"<<newHeader<<"<-"<<endl;
 	newHeader+=lines[i]+"\n";
 	if( i==lastPGLine ){
 	    newHeader+="@PG";
@@ -162,6 +164,7 @@ void putProgramInHeaderHTS(string * header,
 	newHeader+="\tCL:"+programCL;
 	newHeader+="\n";	   
     }
+    trimWhiteSpacesBothEnds(&newHeader);    
     *header=newHeader;
 }
 
