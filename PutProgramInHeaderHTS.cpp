@@ -138,7 +138,7 @@ void putProgramInHeaderHTS(string * header,
     //    exit(1);
     string newHeader="";
     for(int i=0;i<int(lines.size());i++){
-	cerr<<"nh "<<i<<"\t->"<<newHeader<<"<-"<<endl;
+	//cerr<<"nh "<<i<<"\t->"<<newHeader<<"<-"<<endl;
 	newHeader+=lines[i]+"\n";
 	if( i==lastPGLine ){
 	    newHeader+="@PG";
