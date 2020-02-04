@@ -42,7 +42,7 @@ $(bamtools_present):
 	@make testRecons
 
 $(bamtools_absent):
-	@echo "bamtools not found"
+	@echo "Warning: bamtools not found"
 	@echo "You can specify bamtools using make BAMTOOLSINC=/path to bamtools/src/ BAMTOOLSLIB=/path to bamtools/build/src/api/ "; \
 
 gzstream/libgzstream.a:
