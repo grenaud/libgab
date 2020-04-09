@@ -20,8 +20,8 @@ endif
 
 
 CXX      = g++ #-g  -pg
-CXXFLAGS = -Wall  -lm -O3 -I. -Igzstream/ -I${BAMTOOLSINCAPI} -I${BAMTOOLSINCSHARED} 
-LDLIBS   = -lz
+CXXFLAGS += -Wall  -lm -O3 -I. -Igzstream/ -I${BAMTOOLSINCAPI} -I${BAMTOOLSINCSHARED} 
+LDLIBS   += -lz
 LDLIBSHTS = ../lib/samtools/bedidx.o ../lib/htslib/libhts.a ../lib/samtools/libbam.a ../lib/samtools/libst.a 
 CXXFLAGSHTS = -I../lib/samtools/ -I../lib/htslib/   
 
@@ -62,10 +62,10 @@ BamFunctions.o:
 	${CXX} ${CXXFLAGS} ${CXXFLAGSHTS} -c -o BamFunctions.o BamFunctions.cpp
 
 gzstream/libgzstream.a:
-	make -C gzstream/
+	make CXX=${CXX} -C gzstream/
 
 gzstream/gzstream.o:
-	make -C gzstream/
+	make CXX=${CXX} -C gzstream/
 
 
 testUtils:	testUtils.o  utils.o gzstream/libgzstream.a
@@ -79,6 +79,6 @@ testRecons:	testRecons.o  utils.o ${BAMTOOLSLIBOBJ}  ReconsReferenceBAM.o gzstre
 
 clean :
 	rm -f testRecons testUtils *.o 
-	make -C gzstream/ clean
+	make  -C gzstream/ clean
 
 .PHONY: all
