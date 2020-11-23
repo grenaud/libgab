@@ -88,7 +88,7 @@ targetTest:	targetTest.o  utils.o gzstream/libgzstream.a
 testRecons:	testRecons.o  utils.o ${BAMTOOLSLIBOBJ}  ReconsReferenceBAM.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-test:
+test:	all
 	./test.sh
 
 %.o: %.cpp
