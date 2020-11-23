@@ -1,6 +1,7 @@
 
 BAMTOOLS= $(realpath ../bamtools/)
 SAMTOOLS= $(realpath ../samtools/)
+HTSLIB= $(realpath ../htslib/)
 
 
 #defined via user
@@ -18,12 +19,23 @@ else
 	BAMTOOLSLIBOBJ=${BAMTOOLS}/build/src/api/libbamtools.a 
 endif
 
+ifeq ($(CXX),)
+CXX := g++ #-g  -pg 
+endif
 
-CXX      = g++ #-g  -pg
+ifeq ($(SAMTOOLSINC),)#no defined 
+SAMTOOLSINC := ${SAMTOOLS}
+endif
+
+ifeq ($(HTSLIBINC),)#no defined 
+HTSLIBINC := ${HTSLIB}
+endif
+
+
 CXXFLAGS += -Wall  -lm -O3 -I. -Igzstream/ -I${BAMTOOLSINCAPI} -I${BAMTOOLSINCSHARED} 
 LDLIBS   += -lz
-LDLIBSHTS = ../lib/samtools/bedidx.o ../lib/htslib/libhts.a ../lib/samtools/libbam.a ../lib/samtools/libst.a 
-CXXFLAGSHTS = -I../lib/samtools/ -I../lib/htslib/   
+LDLIBSHTS = ${SAMTOOLSINC}/bedidx.o ${HTSLIBINC}/libhts.a ${SAMTOOLSINC}/libbam.a ${SAMTOOLSINC}/libst.a 
+CXXFLAGSHTS = -I${HTSLIBINC} -I${SAMTOOLSINC}
 
 #.PHONY: clean all 
 
