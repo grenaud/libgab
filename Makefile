@@ -74,10 +74,10 @@ BamFunctions.o:
 	${CXX} ${CXXFLAGS} ${CXXFLAGSHTS} -c -o BamFunctions.o BamFunctions.cpp
 
 gzstream/libgzstream.a:
-	make CXX=${CXX} -C gzstream/
+	make CXX=${CXX} CPPFLAGS="${CXXFLAGS}" -C gzstream/
 
 gzstream/gzstream.o:
-	make CXX=${CXX} -C gzstream/
+	make CXX=${CXX} CPPFLAGS="${CXXFLAGS}" -C gzstream/
 
 testUtils:	testUtils.o  utils.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
