@@ -47,7 +47,7 @@ samtools_target  = $(SAMTOOLS)-$(wildcard $(SAMTOOLS))
 samtools_present = $(SAMTOOLS)-$(SAMTOOLS)
 samtools_absent  = $(SAMTOOLS)-
 
-all:  | $(bamtools_target) $(samtools_target)  utils.o testUtils targetTest  PutProgramInHeaderHTS.o gzstream/gzstream.o FastQObj.o FastQParser.o
+all:  | $(bamtools_target) $(samtools_target)  utils.o testUtils targetTest  PutProgramInHeaderHTS.o gzstream/gzstream.o FastQObj.o FastQParser.o libgab.a
 #	all: utils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o PutProgramInHeaderHTS.o gzstream/gzstream.o FastQObj.o FastQParser.o testRecons testRecons.o
 
 
@@ -79,14 +79,17 @@ gzstream/libgzstream.a:
 gzstream/gzstream.o:
 	make CXX=${CXX} CPPFLAGS="${CXXFLAGS}" -C gzstream/
 
-testUtils:	testUtils.o  utils.o gzstream/libgzstream.a
+testUtils:	testUtils.o  libgab.a gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-targetTest:	targetTest.o  utils.o gzstream/libgzstream.a
+targetTest:	targetTest.o libgab.a gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-testRecons:	testRecons.o  utils.o ${BAMTOOLSLIBOBJ}  ReconsReferenceBAM.o gzstream/libgzstream.a
+testRecons:	testRecons.o libgab.a ${BAMTOOLSLIBOBJ}  ReconsReferenceBAM.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
+
+libgab.a: utils.o
+	ar cr libgab.a utils.o
 
 test:	all
 	./test.sh
