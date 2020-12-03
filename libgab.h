@@ -1,5 +1,5 @@
-#ifndef utils_h
-#define utils_h
+#ifndef libgab_h
+#define libgab_h
 
 
 #include <stdint.h>
@@ -120,7 +120,7 @@ inline int base2int(const char c){
 	return 3;
     if(_c ==    'T')
 	return 4;
-    cerr<<"utils.h base2int() Invalid base "<<c<<endl;
+    cerr<<"libgab.h base2int() Invalid base "<<c<<endl;
     exit(1);
 }
 
@@ -134,7 +134,7 @@ inline int baseResolved2int(const char c){
 	return 2;
     if(_c == 'T')
 	return 3;
-    cerr<<"utils.h baseResolved2int() Invalid base "<<c<<endl;
+    cerr<<"libgab.h baseResolved2int() Invalid base "<<c<<endl;
     exit(1);
 }
 
@@ -153,7 +153,7 @@ inline int dimer2index(const char c1,const char c2){
 	if(_c2 ==    'T')
 	    return 2;
 
-	cerr<<"Utils.h:1 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:1 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
@@ -167,7 +167,7 @@ inline int dimer2index(const char c1,const char c2){
 	if(_c2 ==    'T')
 	    return 5;
 
-	cerr<<"Utils.h:2 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:2 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
@@ -181,7 +181,7 @@ inline int dimer2index(const char c1,const char c2){
 	if(_c2 ==    'T')
 	    return 8;
 
-	cerr<<"Utils.h:3 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:3 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
@@ -196,13 +196,13 @@ inline int dimer2index(const char c1,const char c2){
 	if(_c2 ==    'G')
 	    return 11;
 
-	cerr<<"Utils.h:4 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:4 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
 
 
-    cerr<<"Utils.h:5 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
+    cerr<<"Libgab.h:5 dimer2index invalid dimer "<<c1<<" "<<c2<<endl;
     exit(1);
 }
 
@@ -220,7 +220,7 @@ inline int dimer2indexInt(const int c1,const int c2){
 	if(c2 ==    3)
 	    return 2;
 
-	cerr<<"Utils.h:1 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:1 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
@@ -234,7 +234,7 @@ inline int dimer2indexInt(const int c1,const int c2){
 	if(c2 ==    3)
 	    return 5;
 
-	cerr<<"Utils.h:2 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:2 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
@@ -248,7 +248,7 @@ inline int dimer2indexInt(const int c1,const int c2){
 	if(c2 ==    3)
 	    return 8;
 
-	cerr<<"Utils.h:3 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:3 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
@@ -263,13 +263,13 @@ inline int dimer2indexInt(const int c1,const int c2){
 	if(c2 ==    2)
 	    return 11;
 
-	cerr<<"Utils.h:4 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:4 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
 
 
-    cerr<<"Utils.h:5 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
+    cerr<<"Libgab.h:5 dimer2indexInt invalid dimer "<<c1<<" "<<c2<<endl;
     exit(1);
 }
 
@@ -292,7 +292,7 @@ inline int twoBases2index(const char c1,const char c2){
 	if(_c2 ==    'T')
 	    return 3;
 
-	cerr<<"Utils.h:1 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:1 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
@@ -309,7 +309,7 @@ inline int twoBases2index(const char c1,const char c2){
 	if(_c2 ==    'T')
 	    return 7;
 
-	cerr<<"Utils.h:2 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:2 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
@@ -326,7 +326,7 @@ inline int twoBases2index(const char c1,const char c2){
 	    return 11;
 
 
-	cerr<<"Utils.h:3 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:3 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
@@ -343,13 +343,13 @@ inline int twoBases2index(const char c1,const char c2){
 	if(_c2 ==    'T')
 	    return 15;
 
-	cerr<<"Utils.h:4 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
+	cerr<<"Libgab.h:4 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
 	exit(1);
     }
 
 
 
-    cerr<<"Utils.h:5 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
+    cerr<<"Libgab.h:5 twoBases2index invalid dimer "<<c1<<" "<<c2<<endl;
     exit(1);
 }
 
@@ -388,7 +388,7 @@ inline char complement(const char c){
     if(c ==    'N')
 	return 'N';
 
-    cerr<<"Utils.h: complement: Invalid base pair="<<c<<endl;
+    cerr<<"Libgab.h: complement: Invalid base pair="<<c<<endl;
     exit(1);
 }
 
@@ -410,7 +410,7 @@ inline int complementInt(const int c){
     /* 	return  0; */
 
 
-    cerr<<"Utils.h: complementInt: Invalid base pair="<<c<<endl;
+    cerr<<"Libgab.h: complementInt: Invalid base pair="<<c<<endl;
     exit(1);
 }
 
@@ -548,13 +548,13 @@ inline vector<string> allTokensWhiteSpaces(const string  & toparse){
 
 /* inline vector<string> allTokens(const string  & toparse,const string & delim){ */
 /*     if(delim.size() == 0){ */
-/* 	cerr<<"Utils.h: allTokens: delim must have at least one char"<<endl; */
+/* 	cerr<<"Libgab.h: allTokens: delim must have at least one char"<<endl; */
 /* 	exit(1); */
 /*     } */
 /*     /\* if(delim.size() == 1) *\/ */
 /*     /\* 	return allTokens(toparse,delim[0]); *\/ */
 
-/*     cerr<<"Utils.h: allTokens: to implement"<<endl; */
+/*     cerr<<"Libgab.h: allTokens: to implement"<<endl; */
 /*     exit(1); */
 
 /*     /\* vector<string> toReturn; *\/ */
@@ -613,7 +613,7 @@ T destringify( const string& s ){
     istringstream i(s);
     T x;
     if (!(i >> x)){
-	cerr<<"Utils.cpp: destringify() Unable to convert string=\""<<s<<"\""<<endl;
+	cerr<<"Libgab.cpp: destringify() Unable to convert string=\""<<s<<"\""<<endl;
 	exit(1);
     }
     return x;
@@ -861,7 +861,7 @@ inline int randomInt(int minV,int maxV){
     
     
     if( (maxV) < (minV) ){
-	cerr<<"Utils.h randomInt cannot generate an int between "<<minV<<" and "<<maxV<<endl;
+	cerr<<"Libgab.h randomInt cannot generate an int between "<<minV<<" and "<<maxV<<endl;
 	exit(1);
     }
 
@@ -884,7 +884,7 @@ inline long double randomLongDouble(long double minV,long double maxV){
     
     
     if( (maxV) < (minV) ){
-	cerr<<"Utils.h randomInt cannot generate an int between "<<minV<<" and "<<maxV<<endl;
+	cerr<<"Libgab.h randomInt cannot generate an int between "<<minV<<" and "<<maxV<<endl;
 	exit(1);
     }
 
@@ -980,7 +980,7 @@ inline int randomBPExceptIntTS(const int c){
 	return 1;
 
 	
-    cerr<<"Utils.h randomBPExceptIntTS wrong input: "<<c<<endl;
+    cerr<<"Libgab.h randomBPExceptIntTS wrong input: "<<c<<endl;
     exit(1);	
 }
 
@@ -1019,7 +1019,7 @@ inline int randomBPExceptIntTV(const int c){
     /* } */
 
 	
-    cerr<<"Utils.h randomBPExceptIntTV wrong input: "<<c<<endl;
+    cerr<<"Libgab.h randomBPExceptIntTV wrong input: "<<c<<endl;
     exit(1);	
 }
 
@@ -1142,7 +1142,7 @@ inline int allelePair2Int(char bp1,char bp2){
     }
 
 
-    cerr<<"Utils.h allelePair2Int invalid 2 bp: "<<bp1<<" and "<<bp2<<endl;
+    cerr<<"Libgab.h allelePair2Int invalid 2 bp: "<<bp1<<" and "<<bp2<<endl;
     exit(1);
 
 }
@@ -1184,7 +1184,7 @@ inline int isPotentialTransition(const char bp1,const char bp2){
     }
 
 
-    cerr<<"Utils.h isPotentialTransition invalid 2 bp: "<<bp1<<" and "<<bp2<<endl;
+    cerr<<"Libgab.h isPotentialTransition invalid 2 bp: "<<bp1<<" and "<<bp2<<endl;
     exit(1);
 
 }
@@ -1226,13 +1226,13 @@ inline string getTimeString(){
 
 inline double correlation(const vector<double>& x, const vector<double>& y){
     if(x.size() == 0){
-	cerr<<"Utils.h correlation() ERROR: the size of x is zero"<<endl;
+	cerr<<"Libgab.h correlation() ERROR: the size of x is zero"<<endl;
 	exit(1);
 
     }
 
     if(x.size() != y.size()){
-	cerr<<"Utils.h correlation() ERROR: the size of x is not the same as the size of y"<<endl;
+	cerr<<"Libgab.h correlation() ERROR: the size of x is not the same as the size of y"<<endl;
 	exit(1);
     }
 
@@ -1314,7 +1314,7 @@ inline vector<T>  vectorDist(const vector<T> & toEvaluate){
     m2=toEvaluate[0];
     m1=toEvaluate[1];
     if(m2>m1){
-	cerr<<"utils.h vectorDist() vector is unsorted"<<endl;
+	cerr<<"libgab.h vectorDist() vector is unsorted"<<endl;
 	exit(1);
     }
     toReturn.push_back( (m1-m2)  );
@@ -1322,7 +1322,7 @@ inline vector<T>  vectorDist(const vector<T> & toEvaluate){
     for(unsigned int i=2;i<toEvaluate.size();i++){
 	m=toEvaluate[i];
 	if(m1>m){
-	    cerr<<"utils.h vectorDist() vector is unsorted"<<endl;
+	    cerr<<"libgab.h vectorDist() vector is unsorted"<<endl;
 	    exit(1);
 	}
 
@@ -1374,7 +1374,7 @@ inline string getCWD(const char *arg){
     if(returnRealpath == NULL){
 	returnRealpath=getENV(arg);
 	if(returnRealpath == NULL){
-	    cerr<<"utils.h getCWD failed on  "<<*arg<<endl;
+	    cerr<<"libgab.h getCWD failed on  "<<*arg<<endl;
 	    exit(1);
 	}
     }
@@ -1412,7 +1412,7 @@ inline string getFullPath(const string & st){
     char * returnRealpath = realpath(stT.c_str(), actualpath);
     
     if(returnRealpath == NULL){
-	cerr<<"utils.h getFullPath failed on "<<st<<endl;
+	cerr<<"libgab.h getFullPath failed on "<<st<<endl;
 	exit(1);
     }
 
@@ -2169,7 +2169,7 @@ inline char dinucleotide2uipac(const char & b1_,const char & b2_){
 		    
     }
 
-    cerr<<"utils.h dinucleotide2uipac() Invalid bases "<<b1_<<" "<<b2_<<endl;
+    cerr<<"libgab.h dinucleotide2uipac() Invalid bases "<<b1_<<" "<<b2_<<endl;
     exit(1);
 
 }

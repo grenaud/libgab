@@ -47,8 +47,8 @@ samtools_target  = $(SAMTOOLS)-$(wildcard $(SAMTOOLS))
 samtools_present = $(SAMTOOLS)-$(SAMTOOLS)
 samtools_absent  = $(SAMTOOLS)-
 
-all:  | $(bamtools_target) $(samtools_target)  utils.o testUtils targetTest  PutProgramInHeaderHTS.o gzstream/gzstream.o FastQObj.o FastQParser.o libgab.a
-#	all: utils.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o PutProgramInHeaderHTS.o gzstream/gzstream.o FastQObj.o FastQParser.o testRecons testRecons.o
+all:  | $(bamtools_target) $(samtools_target)  libgab.o testUtils targetTest  PutProgramInHeaderHTS.o gzstream/gzstream.o FastQObj.o FastQParser.o libgab.a
+#	all: libgab.o testUtils ReconsReferenceBAM.o PutProgramInHeader.o PutProgramInHeaderHTS.o gzstream/gzstream.o FastQObj.o FastQParser.o testRecons testRecons.o
 
 
 $(bamtools_present):
@@ -88,8 +88,8 @@ targetTest:	targetTest.o libgab.a gzstream/libgzstream.a
 testRecons:	testRecons.o libgab.a ${BAMTOOLSLIBOBJ}  ReconsReferenceBAM.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-libgab.a: utils.o
-	ar cr libgab.a utils.o
+libgab.a: libgab.o
+	ar cr libgab.a libgab.o
 
 test:	all
 	./test.sh
