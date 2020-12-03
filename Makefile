@@ -98,7 +98,7 @@ test:	all
 	${CXX} ${CXXFLAGS} -c $^ -o $@
 
 clean :
-	rm -f testRecons testUtils *.o 
+	rm -f testRecons testUtils *.o  *.a
 	make  -C gzstream/ clean
 
 .PHONY: all
