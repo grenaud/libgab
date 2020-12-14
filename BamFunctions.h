@@ -138,7 +138,7 @@ extern "C" {
 #endif
 
 
-inline bool MergeTrimReads::hasTag(const bam1_t    *al,const string & tag){
+inline bool hasTag(const bam1_t    *al,const string & tag){
     uint8_t *rgtag = bam_aux_get(al,tag.c_str());
     if(rgtag){
         delete(rgtag);
@@ -147,7 +147,7 @@ inline bool MergeTrimReads::hasTag(const bam1_t    *al,const string & tag){
         return false;        
 }
 
-inline void MergeTrimReads::getSeq(const bam1_t * al,string * strseq){
+inline void getSeq(const bam1_t * al,string * strseq){
     uint8_t * s = bam_get_seq(al);
     //if (ks_resize(str, str->l+2+2*c->l_qseq) < 0) goto mem_err;
     //char *cp = str->s + str->l;
@@ -165,7 +165,7 @@ inline void MergeTrimReads::getSeq(const bam1_t * al,string * strseq){
     }
 }
 
-inline void MergeTrimReads::getQual(const bam1_t * al,string * strqual){
+inline void getQual(const bam1_t * al,string * strqual){
     uint8_t *  s = bam_get_qual(al);
     int i = 0;
     strqual->resize(al->core.l_qseq);

@@ -57,6 +57,7 @@ $(bamtools_present):
 	@make PutProgramInHeader.o
 	@make testRecons.o
 	@make testRecons
+	ar cr libgabbamtools.a ReconsReferenceBAM.o PutProgramInHeader.o
 
 $(bamtools_absent):
 	@echo "Warning: bamtools not found"
@@ -72,6 +73,7 @@ $(samtools_absent):
 
 BamFunctions.o:
 	${CXX} ${CXXFLAGS} ${CXXFLAGSHTS} -c -o BamFunctions.o BamFunctions.cpp
+	ar cr libgabbamhts.a BamFunctions.o
 
 gzstream/libgzstream.a:
 	make CXX=${CXX} CPPFLAGS="${CXXFLAGS}" -C gzstream/
@@ -88,8 +90,8 @@ targetTest:	targetTest.o libgab.a gzstream/libgzstream.a
 testRecons:	testRecons.o libgab.a ${BAMTOOLSLIBOBJ}  ReconsReferenceBAM.o gzstream/libgzstream.a
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-libgab.a: libgab.o
-	ar cr libgab.a libgab.o
+libgab.a: libgab.o FastQObj.o FastQParser.o PutProgramInHeaderHTS.o
+	ar cr libgab.a libgab.o FastQObj.o FastQParser.o PutProgramInHeaderHTS.o
 
 test:	all
 	./test.sh
