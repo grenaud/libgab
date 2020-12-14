@@ -91,7 +91,7 @@ testRecons:	testRecons.o libgab.a ${BAMTOOLSLIBOBJ}  ReconsReferenceBAM.o gzstre
 	${CXX} $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 libgab.a: libgab.o FastQObj.o FastQParser.o PutProgramInHeaderHTS.o
-	ar cr libgab.a libgab.o 
+	ar cr libgab.a libgab.o FastQObj.o FastQParser.o PutProgramInHeaderHTS.o
 
 test:	all
 	./test.sh
