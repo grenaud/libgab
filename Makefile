@@ -34,7 +34,7 @@ endif
 
 CXXFLAGS += -Wall  -lm -O3 -I. -Igzstream/ -I${BAMTOOLSINCAPI} -I${BAMTOOLSINCSHARED} 
 LDLIBS   += -lz
-LDLIBSHTS = ${SAMTOOLSINC}/bedidx.o ${HTSLIBINC}/libhts.a ${SAMTOOLSINC}/libbam.a ${SAMTOOLSINC}/libst.a 
+LDLIBSHTS = ${SAMTOOLSINC}/bedidx.o ${HTSLIBINC}/libhts.a  ${SAMTOOLSINC}/libst.a 
 CXXFLAGSHTS = -I${HTSLIBINC} -I${SAMTOOLSINC}
 
 #.PHONY: clean all 
