@@ -37,6 +37,8 @@
 using namespace std;
 static bool srand48Called=false;
 
+
+
 inline char upper(const char c){
     return char(toupper(c));
 }
@@ -2263,6 +2265,60 @@ inline string removeDigitsDots(const string s){
     }
 
     return toreturn;
+}
+
+//ghdir contains the .git directory
+inline string determineGHTag(const string  programName,const string  suffixToAdd){
+
+    string directoryProgram;
+    string commandPath=string(programName);
+    size_t posSlash=commandPath.find_last_of("/");
+    if(posSlash == string::npos){
+        directoryProgram="";
+    }else{
+        directoryProgram=commandPath.substr(0,posSlash);
+    }
+//string gitFileLog=directoryProgram+"/"+suffixToAdd+"/.git/logs/HEAD";
+
+    ifstream myFileLog;
+    string line;
+    string gitFileLog = directoryProgram+"/"+suffixToAdd+"/.git/ORIG_HEAD";
+    string gitCMT;
+    myFileLog.open(gitFileLog.c_str(), ios::in);
+    
+    if (myFileLog.is_open()){
+	while ( getline (myFileLog,line)){
+	    gitCMT=line;
+	}
+	myFileLog.close();	
+    }else{
+	cerr << "Unable to open github file "<<gitFileLog<<endl;
+	return "NA";
+    }
+
+    ifstream myFileTag;
+    string gitVersion="NA";
+    string gitFileTag = directoryProgram+"/"+suffixToAdd+"/.git/packed-refs";
+    myFileTag.open(gitFileTag.c_str(), ios::in);
+    
+    if (myFileTag.is_open()){
+	while ( getline (myFileTag,line)){
+	    vector<string> vs=allTokens(line,' ');
+	    if(vs[0] == gitCMT){
+		gitVersion=vs[1];
+	    }	    
+	}
+	myFileTag.close();	
+    }else{
+	cerr << "Unable to open github file "<<gitFileTag<<endl;
+	return "NA";
+    }
+
+    string rt="refs/tags/";
+    if(strBeginsWith(gitVersion,rt)){
+	gitVersion=gitVersion.substr(rt.length(),gitVersion.length());
+    }
+    return gitVersion;
 }
 
 
