@@ -35,7 +35,9 @@
 
 
 using namespace std;
+
 static bool srand48Called=false;
+static bool srandCalled=false;
 
 
 
@@ -826,14 +828,15 @@ inline string zeroPad(const int numberToOutput,const int amountOfZeros){
     return s.str();
 }
 
-static bool srandCalled=false;
-inline bool randomBool(){
-    if(!srandCalled){
-	timeval time;
-	gettimeofday(&time, NULL);
-	srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
-	srandCalled=true;
-    }
+inline bool randomBool(bool callSRAND=true){
+
+    if(callSRAND)
+	if(!srandCalled){
+	    timeval time;
+	    gettimeofday(&time, NULL);
+	    srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	    srandCalled=true;
+	}
 
 
     if(rand() % 2 == 0)
@@ -844,15 +847,15 @@ inline bool randomBool(){
 
 
 //returns an int betwen minV and maxV inclusive
-inline int randomInt(int minV,int maxV){
+inline int randomInt(int minV,int maxV,bool callSRAND=true){
 
-
-    if(!srand48Called){
-	timeval time;
-	gettimeofday(&time, NULL);
-	srand48(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
-	srand48Called=true;
-    }
+    if(callSRAND)
+	if(!srand48Called){
+	    timeval time;
+	    gettimeofday(&time, NULL);
+	    srand48(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	    srand48Called=true;
+	}
 
     /* if(!srandCalled){ */
     /* 	timeval time; */
@@ -876,7 +879,8 @@ inline int randomInt(int minV,int maxV){
 
 
 //returns an int betwen minV and maxV inclusive
-inline long double randomLongDouble(long double minV,long double maxV){
+inline long double randomLongDouble(long double minV,long double maxV,bool callSRAND=true){
+    if(callSRAND)
     if(!srandCalled){
 	timeval time;
 	gettimeofday(&time, NULL);
@@ -897,13 +901,14 @@ inline long double randomLongDouble(long double minV,long double maxV){
 
 
 
-inline double randomProb(){ //returns between 0 and 1
-    if(!srandCalled){
-	timeval time;
-	gettimeofday(&time, NULL);
-	srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
-	srandCalled=true;
-    }
+inline double randomProb(bool callSRAND=true){ //returns between 0 and 1
+    if(callSRAND)
+	if(!srandCalled){
+	    timeval time;
+	    gettimeofday(&time, NULL);
+	    srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	    srandCalled=true;
+	}
 
 
     return double(rand())/double(RAND_MAX);
@@ -921,19 +926,26 @@ inline int callRand(){
 
 
 
-inline unsigned int randomUint(){
-    if(!srand48Called){
-	timeval time;
-	gettimeofday(&time, NULL);
-	srand48(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
-	srand48Called=true;
-    }
+inline unsigned int randomUint(bool callSRAND=true){
+    if(callSRAND)
+	if(!srand48Called){
+	    timeval time;
+	    gettimeofday(&time, NULL);
+	    srand48(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	    srand48Called=true;
+	}
     unsigned int toReturn = (unsigned int)(mrand48());
     return toReturn;
 }
 
 
-inline char randomBPExcept(const char c){
+inline char randomBPExcept(const char c,bool callSRAND=true){
+    if(!srandCalled){
+	timeval time;
+	gettimeofday(&time, NULL);
+	srand(  long((time.tv_sec * 1000) + (time.tv_usec / 1000)) );
+	srandCalled=true;
+    }
     if(c ==    'A')
 	return "CGT"[ rand()%3 ];
     if(c ==    'C')
@@ -947,26 +959,26 @@ inline char randomBPExcept(const char c){
 }
 
 //A=0,C=1,G=2,T=3
-inline int randomBPExceptInt(const int c){
+inline int randomBPExceptInt(const int c,bool callSRAND=true){
     if(c ==    0)
-	return randomInt(1,3);
+	return randomInt(1,3,callSRAND);
 
     if(c ==    1){
-	int tr=randomInt(1,3);
+	int tr=randomInt(1,3,callSRAND);
 	if(tr == 1) tr=0;
 	return tr;
     }
 
     if(c ==    2){
-	int tr=randomInt(0,2);
+	int tr=randomInt(0,2,callSRAND);
 	if(tr == 2) tr=3;
 	return tr;
     }
 
     if(c ==    3)
-	return randomInt(0,2);
+	return randomInt(0,2,callSRAND);
 
-    return randomInt(0,3);
+    return randomInt(0,3,callSRAND);
 }
 
 
@@ -987,9 +999,9 @@ inline int randomBPExceptIntTS(const int c){
 }
 
 //A=0,C=1,G=2,T=3
-inline int randomBPExceptIntTV(const int c){
+inline int randomBPExceptIntTV(const int c,bool callSRAND=true){
     if(c ==    0 || c==2){//A,G
-	if(randomBool())
+	if(randomBool(callSRAND))
 	    return 1;//C
 	else
 	    return 3;//T
@@ -997,7 +1009,7 @@ inline int randomBPExceptIntTV(const int c){
     }
 
     if(c ==    1 || c==3){//C,T
-	if(randomBool())
+	if(randomBool(callSRAND))
 	    return 0;//A
 	else
 	    return 2;//G
@@ -1026,8 +1038,9 @@ inline int randomBPExceptIntTV(const int c){
 }
 
 
-inline string randomDNASeq(int desiredLength){
+inline string randomDNASeq(const int desiredLength,bool callSRAND=true){
   string toreturn="";
+  if(callSRAND)
   if(!srandCalled){
     timeval time;
     gettimeofday(&time, NULL);

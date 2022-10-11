@@ -18,6 +18,10 @@ int randIn(int n){
 
 int main (int argc, char *argv[]) {
 
+    cerr<<randomBool(false)<<endl;
+    
+    return 0;
+    
     cerr<<getCWD(argv[0])<<endl;
     
     return 0;
