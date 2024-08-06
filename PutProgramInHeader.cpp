@@ -40,7 +40,7 @@
 
 
 
-void putProgramInHeader(SamHeader * header,
+void putProgramInHeader(SamHeader    * header,
 			const string & programID,
 			const string & programName,
 			const string & programCL,

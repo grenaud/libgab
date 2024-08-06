@@ -18,6 +18,7 @@
 #include <api/BamReader.h>
 #include <api/BamWriter.h>
 #include <api/BamAux.h>
+#include <api/SamProgramChain.h>
 
 #include "libgab.h"
 
