@@ -16,7 +16,7 @@ endif
 ifdef BAMTOOLSLIB
 	BAMTOOLSLIBOBJ=${BAMTOOLSLIB}/libbamtools.a 
 else
-	BAMTOOLSLIBOBJ=${BAMTOOLS}/build/src/api/libbamtools.a 
+	BAMTOOLSLIBOBJ=${BAMTOOLS}/build/src/libbamtools.a 
 endif
 
 ifeq ($(CXX),)
